@@ -68,3 +68,7 @@ CREATE TABLE productbuysell (
   FOREIGN KEY (product_id) REFERENCES products (id)
 )
   ENGINE = InnoDB;
+
+/* Create View Products by count sum */
+CREATE VIEW totalproducts AS SELECT  productname, vendorecode, product_id , SUM(count)
+FROM products, productactions WHERE product_id = products.id GROUP BY product_id;
