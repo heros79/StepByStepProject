@@ -39,3 +39,21 @@ CREATE TABLE prodbrand (
   ENGINE = InnoDB;
 
 INSERT INTO prodbrand (brandname) VALUE ('IKEA');
+
+/* Create Products table */
+CREATE TABLE products (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  category_id INT NOT NULL ,
+  type_id INT NOT NULL ,
+  brand_id INT NOT NULL ,
+  vendorcode VARCHAR(50) NOT NULL UNIQUE ,
+  productname VARCHAR(100) NOT NULL ,
+  price DOUBLE NOT NULL ,
+  description TEXT,
+  filepath VARCHAR(255) NOT NULL ,
+
+  FOREIGN KEY (category_id) REFERENCES prodcategory (id),
+  FOREIGN KEY (type_id) REFERENCES prodtype (id),
+  FOREIGN KEY (brand_id) REFERENCES prodbrand (id)
+)
+  ENGINE = InnoDB;
