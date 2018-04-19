@@ -57,3 +57,14 @@ CREATE TABLE products (
   FOREIGN KEY (brand_id) REFERENCES prodbrand (id)
 )
   ENGINE = InnoDB;
+
+/* Create Product buy and sell action with date and count */
+CREATE TABLE productbuysell (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  product_id INT NOT NULL,
+  count INT NOT NULL,
+  buydate DATE,
+  selldate DATE,
+  FOREIGN KEY (product_id) REFERENCES products (id)
+)
+  ENGINE = InnoDB;
