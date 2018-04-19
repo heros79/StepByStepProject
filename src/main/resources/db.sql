@@ -9,3 +9,12 @@ CREATE TABLE users (
   role INT NOT NULL
 )
   ENGINE = InnoDB;
+
+/* Create ProductCategory table */
+CREATE TABLE prodcategory (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  categoryname VARCHAR(100) NOT NULL UNIQUE
+)
+  ENGINE = InnoDB;
+
+INSERT INTO prodcategory (categoryname) VALUE ("household");
