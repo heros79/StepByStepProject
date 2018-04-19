@@ -17,7 +17,7 @@ CREATE TABLE prodcategory (
 )
   ENGINE = InnoDB;
 
-INSERT INTO prodcategory (categoryname) VALUE ("household");
+INSERT INTO prodcategory (categoryname) VALUE ('household');
 
 /* Cretate ProductType table */
 CREATE TABLE prodtype (
@@ -29,4 +29,4 @@ CREATE TABLE prodtype (
 )
   ENGINE = InnoDB;
 
-INSERT INTO prodtype VALUE ((SELECT id FROM prodcategory WHERE categoryname = "household"), "IKEA");
+INSERT INTO prodtype VALUE ((SELECT id FROM prodcategory WHERE categoryname = 'household'), 'soap');
