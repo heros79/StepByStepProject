@@ -1,10 +1,12 @@
 package am.lavshuka.lad.dao.user;
 
-import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.user.UserModel;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,55 +16,29 @@ import java.util.List;
  */
 public class UserDao {
 
-    private PreparedStatement statement = null;
+    private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
     public void addUser(UserModel userModel) throws SQLException {
 
-        statement = DBconn.getInstance().connection().prepareStatement("INSERT INTO users (login, passhash, firstname, lastname, email, role)VALUE (?, ?, ?, ?, ?, ?)");
-        statement.setString(1, userModel.getLogin());
-        statement.setString(2, userModel.getPassHash());
-        statement.setString(3, userModel.getFirstName());
-        statement.setString(4, userModel.getLastName());
-        statement.setString(5, userModel.getEmail());
-        statement.setInt(6, userModel.getRole().ordinal());
-
-        statement.executeUpdate();
-
+        Session session = sessionFactory.openSession();
+        Transaction tx;
+        tx = session.beginTransaction();
+        session.save(userModel);
+        tx.commit();
+        session.close();
     }
 
     public UserModel findByLogin(String login) throws SQLException {
 
-        statement = DBconn.getInstance().connection().prepareStatement("SELECT * FROM " +
-                "users WHERE login = ?");
+        Session session = sessionFactory.openSession();
+        Transaction tx;
+        tx = session.beginTransaction();
+        Query query = session.createQuery("from UserModel where login = ?");
+        query.setParameter(0, login);
 
-        statement.setString(1, login);
-
-        ResultSet result = statement.executeQuery();
-
-        result.next();
-
-        UserModel userModel = new UserModel();
-
-        userModel.setId(result.getLong(1));
-        userModel.setLogin(result.getString(2));
-        userModel.setPassHash(result.getString(3));
-        userModel.setFirstName(result.getString(4));
-        userModel.setLastName(result.getString(5));
-        userModel.setEmail(result.getString(6));
-
-        UserModel.Role role = null;
-        switch (result.getInt(7)) {
-            case 0: {
-                role = UserModel.Role.ROLE_USER;
-                break;
-            }
-            case 1: {
-                role = UserModel.Role.ROLE_ADMIN;
-                break;
-            }
-        }
-
-        userModel.setRole(role);
+        UserModel userModel = (UserModel) query.uniqueResult();
+        tx.commit();
+        session.close();
 
         return userModel;
     }
@@ -71,37 +47,13 @@ public class UserDao {
 
         List<UserModel> list = new ArrayList<UserModel>();
 
-        statement = DBconn.getInstance().connection().prepareStatement("SELECT * FROM users");
-
-        ResultSet result = statement.executeQuery();
-
-        UserModel userModel;
-
-        while (result.next()) {
-            userModel = new UserModel();
-            userModel.setId(result.getLong(1));
-            userModel.setLogin(result.getString(2));
-            userModel.setPassHash(result.getString(3));
-            userModel.setFirstName(result.getString(4));
-            userModel.setLastName(result.getString(5));
-            userModel.setEmail(result.getString(6));
-
-            UserModel.Role role = null;
-            switch (result.getInt(7)) {
-                case 0: {
-                    role = UserModel.Role.ROLE_USER;
-                    break;
-                }
-                case 1: {
-                    role = UserModel.Role.ROLE_ADMIN;
-                    break;
-                }
-            }
-
-            userModel.setRole(role);
-
-            list.add(userModel);
-        }
+        Session session = sessionFactory.openSession();
+        Transaction tx;
+        tx = session.beginTransaction();
+        Query query = session.createQuery("from UserModel");
+        list = query.list();
+        tx.commit();
+        session.close();
 
         return list;
     }
@@ -112,32 +64,34 @@ public class UserDao {
             throw new IllegalArgumentException();
         }
 
+        Session session = sessionFactory.openSession();
+        Transaction tx;
+        tx = session.beginTransaction();
+
         if (password != null) {
-            statement = DBconn.getInstance().connection().prepareStatement("UPDATE users SET passhash = ? WHERE login = ?");
-
-            statement.setString(1, password);
-            statement.setString(2, userModel.getLogin());
-
-            statement.executeUpdate();
+            userModel.setPassHash(password);
         }
 
         if (email != null) {
-            statement = DBconn.getInstance().connection().prepareStatement("UPDATE users SET email = ? WHERE login = ?");
-
-            statement.setString(1, email);
-            statement.setString(2, userModel.getEmail());
-
-            statement.executeUpdate();
+            userModel.setEmail(email);
         }
+
+        session.update(userModel);
+        tx.commit();
+        session.close();
     }
 
     public void removeUser(String login) throws SQLException {
 
-        statement = DBconn.getInstance().connection().prepareStatement("DELETE FROM users " +
-                "WHERE login = ?");
+        Session session = sessionFactory.openSession();
+        Transaction tx;
+        tx = session.beginTransaction();
+        Query query = session.createQuery("from UserModel where login = ?");
+        query.setParameter(0, login);
 
-        statement.setString(1, login);
-
-        statement.executeUpdate();
+        UserModel userModel = (UserModel) query.uniqueResult();
+        session.delete(userModel);
+        tx.commit();
+        session.close();
     }
 }
