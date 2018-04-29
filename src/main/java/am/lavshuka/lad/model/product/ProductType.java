@@ -1,13 +1,29 @@
 package am.lavshuka.lad.model.product;
 
+import javax.persistence.*;
+import java.util.Set;
+
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
+@Entity
+@Table(name = "prodtype")
 public class ProductType {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long productCategoryId;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private ProductCategory productCategory;
+
+    @Column(name = "typename")
     private String productTypeName;
+
+    @OneToMany(mappedBy = "productType")
+    private Set<ProductModel> productModelSet;
 
     public ProductType() {
     }
@@ -20,12 +36,12 @@ public class ProductType {
         this.id = id;
     }
 
-    public Long getProductCategoryId() {
-        return productCategoryId;
+    public ProductCategory getProductCategory() {
+        return productCategory;
     }
 
-    public void setProductCategoryId(Long productCategoryId) {
-        this.productCategoryId = productCategoryId;
+    public void setProductCategory(ProductCategory productCategory) {
+        this.productCategory = productCategory;
     }
 
     public String getProductTypeName() {
@@ -34,5 +50,13 @@ public class ProductType {
 
     public void setProductTypeName(String productTypeName) {
         this.productTypeName = productTypeName;
+    }
+
+    public Set<ProductModel> getProductModelSet() {
+        return productModelSet;
+    }
+
+    public void setProductModelSet(Set<ProductModel> productModelSet) {
+        this.productModelSet = productModelSet;
     }
 }

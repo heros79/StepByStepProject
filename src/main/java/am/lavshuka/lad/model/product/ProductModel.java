@@ -1,19 +1,49 @@
 package am.lavshuka.lad.model.product;
 
+import javax.persistence.*;
+import java.util.List;
+
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
+@Entity
+@Table(name = "products")
 public class ProductModel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long categoryId;
-    private Long typeId;
-    private Long brendId;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private ProductCategory productCategory;
+
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private ProductType productType;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private ProductBrand productBrand;
+
+    @Column(name = "vendorcode")
     private String vendorCode;
+
+    @Column(name = "productname")
     private String productName;
+
+    @Column(name = "price")
     private Double price;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "filepath")
     private String productImageFilePath;
+
+    @OneToMany(mappedBy = "productModel")
+    private List<BuySellActionProduct> buySellActionProductList;
 
     public ProductModel() {
     }
@@ -26,28 +56,28 @@ public class ProductModel {
         this.id = id;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public ProductCategory getProductCategory() {
+        return productCategory;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setProductCategory(ProductCategory productCategory) {
+        this.productCategory = productCategory;
     }
 
-    public Long getTypeId() {
-        return typeId;
+    public ProductType getProductType() {
+        return productType;
     }
 
-    public void setTypeId(Long typeId) {
-        this.typeId = typeId;
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
-    public Long getBrendId() {
-        return brendId;
+    public ProductBrand getProductBrand() {
+        return productBrand;
     }
 
-    public void setBrendId(Long brendId) {
-        this.brendId = brendId;
+    public void setProductBrand(ProductBrand productBrand) {
+        this.productBrand = productBrand;
     }
 
     public String getVendorCode() {
@@ -88,6 +118,14 @@ public class ProductModel {
 
     public void setProductImageFilePath(String productImageFilePath) {
         this.productImageFilePath = productImageFilePath;
+    }
+
+    public List<BuySellActionProduct> getBuySellActionProductList() {
+        return buySellActionProductList;
+    }
+
+    public void setBuySellActionProductList(List<BuySellActionProduct> buySellActionProductList) {
+        this.buySellActionProductList = buySellActionProductList;
     }
 
     @Override

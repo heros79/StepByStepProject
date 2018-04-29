@@ -1,16 +1,31 @@
 package am.lavshuka.lad.model.product;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
+@Entity
+@Table(name = "productbuysell")
 public class BuySellActionProduct {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long product_id;
+
+    @ManyToOne()
+    @JoinColumn(name = "product_id")
+    private ProductModel productModel;
+
+    @Column(name = "count")
     private Integer count;
+
+    @Column(name = "buydate")
     private Date productBuyDate;
+
+    @Column(name = "selldate")
     private Date productSellDate;
 
     public BuySellActionProduct() {
@@ -24,12 +39,12 @@ public class BuySellActionProduct {
         this.id = id;
     }
 
-    public Long getProduct_id() {
-        return product_id;
+    public ProductModel getProductModel() {
+        return productModel;
     }
 
-    public void setProduct_id(Long product_id) {
-        this.product_id = product_id;
+    public void setProductModel(ProductModel productModel) {
+        this.productModel = productModel;
     }
 
     public Integer getCount() {

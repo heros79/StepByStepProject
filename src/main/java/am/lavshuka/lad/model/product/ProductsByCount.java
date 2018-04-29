@@ -1,13 +1,26 @@
 package am.lavshuka.lad.model.product;
 
+import javax.persistence.*;
+
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
+@Entity
+@Table(name = "totalproducts")
 public class ProductsByCount {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productId;
+
+    @Column(name = "productname")
     private String productName;
+
+    @Column(name = "vendorcode")
     private String vendorCode;
+
+    @Column(name = "SUM(count)")
     private Double count;
 
     public ProductsByCount() {
