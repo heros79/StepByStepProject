@@ -26,7 +26,7 @@ public class ProductTypeDaoTest {
     public void addProductTypeTest() {
 
         try {
-            productType.setProductCategoryId(new ProductCategoryDao().findByCategoryName("household").getId());
+            productType.setProductCategory(new ProductCategoryDao().findByCategoryName("household"));
             productType.setProductTypeName("test");
             new ProductTypeDao().addProductType(productType);
         } catch (SQLException e) {

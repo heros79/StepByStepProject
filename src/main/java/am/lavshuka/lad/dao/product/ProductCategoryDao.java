@@ -1,10 +1,12 @@
 package am.lavshuka.lad.dao.product;
 
-import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.product.ProductCategory;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,35 +14,31 @@ import java.util.List;
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
 public class ProductCategoryDao {
 
-    private PreparedStatement statement = null;
+    private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
     public void addProductCategoty(ProductCategory category) throws SQLException {
 
-        statement = DBconn.getInstance().connection().prepareStatement("INSERT INTO prodcategory (categoryname)" +
-                "VALUE (?)");
-
-        statement.setString(1, category.getProductCategoryName());
-
-        statement.executeUpdate();
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.save(category);
+        tx.commit();
+        session.close();
     }
 
     public ProductCategory findByCategoryName(String categoryName) throws SQLException {
 
-        statement = DBconn.getInstance().connection().prepareStatement("SELECT * FROM prodcategory " +
-                "WHERE categoryname = ?");
+        Session session = sessionFactory.openSession();
+        Transaction tx;
+        tx = session.beginTransaction();
+        Query query = session.createQuery("from ProductCategory where productCategoryName = ?");
+        query.setParameter(0, categoryName);
 
-        statement.setString(1, categoryName);
-
-        ResultSet result = statement.executeQuery();
-
-        result.next();
-
-        ProductCategory productCategory = new ProductCategory();
-
-        productCategory.setId(result.getLong(1));
-        productCategory.setProductCategoryName(result.getString(2));
+        ProductCategory productCategory = (ProductCategory) query.uniqueResult();
+        tx.commit();
+        session.close();
 
         return productCategory;
     }
@@ -49,18 +47,14 @@ public class ProductCategoryDao {
 
         List<ProductCategory> list = new ArrayList<>();
 
-        ProductCategory productCategory;
+        Session session = sessionFactory.openSession();
+        Transaction tx;
+        tx = session.beginTransaction();
+        Query query = session.createQuery("from ProductCategory ");
+        list = query.list();
+        tx.commit();
+        session.close();
 
-        statement = DBconn.getInstance().connection().prepareStatement("SELECT * FROM prodcategory");
-
-        ResultSet result = statement.executeQuery();
-
-        while (result.next()) {
-            productCategory = new ProductCategory();
-            productCategory.setId(result.getLong(1));
-            productCategory.setProductCategoryName(result.getString(2));
-            list.add(productCategory);
-        }
         return list;
     }
 }
