@@ -10,17 +10,16 @@ import javax.persistence.*;
 @Table(name = "totalproducts")
 public class ProductsByCount {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "product_id")
     private Long productId;
 
     @Column(name = "productname")
     private String productName;
-
+    @Id
     @Column(name = "vendorcode")
     private String vendorCode;
 
-    @Column(name = "SUM(count)")
+    @Column(name = "count")
     private Double count;
 
     public ProductsByCount() {

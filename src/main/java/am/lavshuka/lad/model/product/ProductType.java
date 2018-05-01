@@ -15,14 +15,14 @@ public class ProductType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private ProductCategory productCategory;
 
     @Column(name = "typename")
     private String productTypeName;
 
-    @OneToMany(mappedBy = "productType")
+    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productType")
     private Set<ProductModel> productModelSet;
 
     public ProductType() {

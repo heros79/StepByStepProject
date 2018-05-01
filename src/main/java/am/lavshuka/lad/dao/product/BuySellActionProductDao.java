@@ -1,95 +1,90 @@
 package am.lavshuka.lad.dao.product;
 
-import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.product.BuySellActionProduct;
 import am.lavshuka.lad.model.product.ProductModel;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
 public class BuySellActionProductDao {
 
-    private PreparedStatement statement = null;
+    private SessionFactory sessionFactory;
+    private Session session;
+    private Transaction tx;
 
-    public void buyProduct(ProductModel productModel, int count, Date buyDate) throws SQLException {
-
-        statement = DBconn.getInstance().connection().prepareStatement("INSERT INTO productbuysell (product_id, count, buydate) VALUE (?, ?, ?)");
-        statement.setLong(1, productModel.getId());
-        statement.setInt(2, count);
-        statement.setDate(3, convertUtilDateToSqlDate(buyDate));
-
-        statement.executeUpdate();
+    public BuySellActionProductDao() {
+        sessionFactory = new Configuration().configure().buildSessionFactory();
     }
 
-    public void sellProduct(ProductModel productModel, int count, Date sellDate) throws SQLException {
-        statement = DBconn.getInstance().connection().prepareStatement("INSERT INTO productbuysell (product_id, count, selldate) VALUE (?, ?, ?)");
-        statement.setLong(1, productModel.getId());
-        statement.setInt(2, (count * -1));
-        statement.setDate(3, convertUtilDateToSqlDate(sellDate));
+    public void buyProduct(ProductModel productModel, int count, java.util.Date buyDate) throws SQLException {
 
-        statement.executeUpdate();
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
+
+        BuySellActionProduct product = new BuySellActionProduct();
+        product.setProductModel(productModel);
+        product.setCount(count);
+        product.setProductBuyDate(buyDate);
+
+        session.save(product);
+
+        tx.commit();
+        session.close();
+    }
+
+    public void sellProduct(ProductModel productModel, int count, java.util.Date sellDate) throws SQLException {
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
+
+        BuySellActionProduct product = new BuySellActionProduct();
+        product.setProductModel(productModel);
+        product.setCount(count);
+        product.setProductSellDate(sellDate);
+
+        session.save(product);
+
+        tx.commit();
+        session.close();
     }
 
     public List<BuySellActionProduct> findBuyProductByDate(java.util.Date date) throws SQLException {
-        List<BuySellActionProduct> list = new ArrayList<>();
-        BuySellActionProduct product;
 
-        statement = DBconn.getInstance().connection().prepareStatement("SELECT * FROM productbuysell WHERE buydate = ?");
-        statement.setDate(1, convertUtilDateToSqlDate(date));
+        List<BuySellActionProduct> list;
 
-        ResultSet result = statement.executeQuery();
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
 
-        while (result.next()) {
-            product = new BuySellActionProduct();
+        Query query = session.createQuery("from BuySellActionProduct where productBuyDate = :date");
+        query.setParameter("date", date);
+        list = query.list();
 
-            product.setId(result.getLong(1));
-            product.setProduct_id(result.getLong(2));
-            product.setCount(result.getInt(3));
-            product.setProductBuyDate(convertSqlDateToUtilDate(result.getDate(4)));
-            product.setProductSellDate(result.getDate(5));
-
-            list.add(product);
-        }
+        tx.commit();
+        session.close();
 
         return list;
     }
 
     public List<BuySellActionProduct> findSellProductByDate(java.util.Date date) throws SQLException {
-        List<BuySellActionProduct> list = new ArrayList<>();
-        BuySellActionProduct product;
+        List<BuySellActionProduct> list;
 
-        statement = DBconn.getInstance().connection().prepareStatement("SELECT * FROM productbuysell WHERE selldate = ?");
-        statement.setDate(1, convertUtilDateToSqlDate(date));
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
 
-        ResultSet result = statement.executeQuery();
+        Query query = session.createQuery("from BuySellActionProduct where productSellDate = :date");
+        query.setParameter("date", date);
+        list = query.list();
 
-        while (result.next()) {
-            product = new BuySellActionProduct();
-
-            product.setId(result.getLong(1));
-            product.setProduct_id(result.getLong(2));
-            product.setCount(result.getInt(3));
-            product.setProductBuyDate(result.getDate(4));
-            product.setProductSellDate(convertSqlDateToUtilDate(result.getDate(5)));
-
-            list.add(product);
-        }
+        tx.commit();
+        session.close();
 
         return list;
-    }
-
-    private java.sql.Date convertUtilDateToSqlDate(java.util.Date date) {
-        return new java.sql.Date(date.getTime());
-    }
-
-    private java.util.Date convertSqlDateToUtilDate(java.sql.Date date) {
-        return new java.util.Date(date.getTime());
     }
 }

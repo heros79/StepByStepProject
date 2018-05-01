@@ -8,18 +8,17 @@ import am.lavshuka.lad.model.product.ProductType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
 public class ProductDaoTest {
 
     private ProductModel productModel = new ProductModel();
@@ -28,9 +27,9 @@ public class ProductDaoTest {
     public void addProductTest() {
 
         try {
-            productModel.setCategoryId(new ProductCategoryDao().findByCategoryName("household").getId());
-            productModel.setTypeId(new ProductTypeDao().findByTypeName("soap").getId());
-            productModel.setBrendId(new ProductBrandDao().findByProductBrandName("IKEA").getId());
+            productModel.setProductCategory(new ProductCategoryDao().findByCategoryName("household"));
+            productModel.setProductType(new ProductTypeDao().findByTypeName("soap"));
+            productModel.setProductBrand(new ProductBrandDao().findByProductBrandName("IKEA"));
             productModel.setVendorCode("test");
             productModel.setProductName("test");
             productModel.setPrice(100.00);
@@ -174,6 +173,7 @@ public class ProductDaoTest {
         Double price = 200.00;
 
         try {
+            productModel = new ProductDao().findByVendorCode("test");
             new ProductDao().changeProductData(productModel, price, null);
             productModel = new ProductDao().findByVendorCode("test");
         } catch (SQLException e) {
@@ -185,6 +185,7 @@ public class ProductDaoTest {
         String description = "changetest";
 
         try {
+            productModel = new ProductDao().findByVendorCode("test");
             new ProductDao().changeProductData(productModel, null, description);
             productModel = new ProductDao().findByVendorCode("test");
         } catch (SQLException e) {

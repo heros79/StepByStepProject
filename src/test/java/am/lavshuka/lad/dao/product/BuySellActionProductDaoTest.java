@@ -6,19 +6,18 @@ import am.lavshuka.lad.model.product.ProductModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
 public class BuySellActionProductDaoTest {
 
     @Before
@@ -40,7 +39,7 @@ public class BuySellActionProductDaoTest {
 
         try {
             PreparedStatement statement = DBconn.getInstance().connection().prepareStatement("SELECT COUNT(*) FROM productbuysell " +
-                    "WHERE buydate IS NOT NULL ");
+                    "WHERE buydate = CURDATE()");
 
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
@@ -62,7 +61,7 @@ public class BuySellActionProductDaoTest {
 
         try {
             PreparedStatement statement = DBconn.getInstance().connection().prepareStatement("SELECT COUNT(*) FROM productbuysell " +
-                    "WHERE selldate IS NOT NULL ");
+                    "WHERE selldate = CURDATE()");
 
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();

@@ -1,63 +1,61 @@
 package am.lavshuka.lad.dao.product;
 
-import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.product.ProductBrand;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
 public class ProductBrandDao {
 
-    private PreparedStatement statement = null;
+    private SessionFactory sessionFactory;
+    private Session session;
+    private Transaction tx;
+
+    public ProductBrandDao() {
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
 
     public void addProductBrand(ProductBrand productBrand) throws SQLException {
 
-        statement = DBconn.getInstance().connection().prepareStatement("INSERT INTO prodbrand (brandname) VALUE (?)");
-
-        statement.setString(1, productBrand.getProductBrandName());
-
-        statement.executeUpdate();
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
+        session.save(productBrand);
+        tx.commit();
+        session.close();
     }
 
     public ProductBrand findByProductBrandName(String brandName) throws SQLException {
 
-        ProductBrand productBrand = new ProductBrand();
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
+        Query query = session.createQuery("from ProductBrand where productBrandName = :name");
+        query.setParameter("name", brandName);
+        ProductBrand productBrand = (ProductBrand)query.uniqueResult();
 
-        statement = DBconn.getInstance().connection().prepareStatement("SELECT * FROM prodbrand WHERE brandname = ?");
-
-        statement.setString(1, brandName);
-
-        ResultSet result = statement.executeQuery();
-
-        result.next();
-
-        productBrand.setId(result.getLong(1));
-        productBrand.setProductBrandName(result.getString(2));
+        tx.commit();
+        session.close();
 
         return productBrand;
     }
 
     public List<ProductBrand> findAllProductBrand() throws SQLException {
 
-        List<ProductBrand> list = new ArrayList<>();
-        ProductBrand productBrand;
+        List<ProductBrand> list;
 
-        statement = DBconn.getInstance().connection().prepareStatement("SELECT * FROM prodbrand");
-
-        ResultSet result = statement.executeQuery();
-
-        while (result.next()) {
-            productBrand = new ProductBrand();
-            productBrand.setId(result.getLong(1));
-            productBrand.setProductBrandName(result.getString(2));
-            list.add(productBrand);
-        }
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
+        Query query = session.createQuery("from ProductBrand ");
+        list = query.list();
+        tx.commit();
+        session.close();
 
         return list;
     }

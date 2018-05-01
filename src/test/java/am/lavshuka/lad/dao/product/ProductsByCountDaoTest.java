@@ -4,18 +4,17 @@ import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.product.ProductsByCount;
 import org.junit.Test;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
 public class ProductsByCountDaoTest {
 
     @Test

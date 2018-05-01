@@ -5,18 +5,17 @@ import am.lavshuka.lad.model.product.ProductCategory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
 public class ProductCategoryDaoTest {
 
     private PreparedStatement statement = null;

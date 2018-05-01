@@ -18,7 +18,7 @@ public class ProductBrand {
     @Column(name = "brandname")
     private String productBrandName;
 
-    @OneToMany(mappedBy = "productBrand")
+    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productBrand")
     private Set<ProductModel> productModelSet;
 
     public ProductBrand() {

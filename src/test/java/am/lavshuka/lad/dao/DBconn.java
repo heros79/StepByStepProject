@@ -1,6 +1,5 @@
 package am.lavshuka.lad.dao;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -41,5 +40,4 @@ public class DBconn {
     public Connection connection() {
         return conn;
     }
-
 }

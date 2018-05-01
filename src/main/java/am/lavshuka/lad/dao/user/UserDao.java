@@ -14,14 +14,20 @@ import java.util.List;
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
 public class UserDao {
 
-    private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    private SessionFactory sessionFactory;
+    private Session session;
+    private Transaction tx;
+
+    public UserDao() {
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
 
     public void addUser(UserModel userModel) throws SQLException {
 
-        Session session = sessionFactory.openSession();
-        Transaction tx;
+        session = sessionFactory.openSession();
         tx = session.beginTransaction();
         session.save(userModel);
         tx.commit();
@@ -30,9 +36,9 @@ public class UserDao {
 
     public UserModel findByLogin(String login) throws SQLException {
 
-        Session session = sessionFactory.openSession();
-        Transaction tx;
+        session = sessionFactory.openSession();
         tx = session.beginTransaction();
+
         Query query = session.createQuery("from UserModel where login = ?");
         query.setParameter(0, login);
 
@@ -47,8 +53,7 @@ public class UserDao {
 
         List<UserModel> list = new ArrayList<UserModel>();
 
-        Session session = sessionFactory.openSession();
-        Transaction tx;
+        session = sessionFactory.openSession();
         tx = session.beginTransaction();
         Query query = session.createQuery("from UserModel");
         list = query.list();
@@ -64,8 +69,7 @@ public class UserDao {
             throw new IllegalArgumentException();
         }
 
-        Session session = sessionFactory.openSession();
-        Transaction tx;
+        session = sessionFactory.openSession();
         tx = session.beginTransaction();
 
         if (password != null) {
@@ -83,8 +87,7 @@ public class UserDao {
 
     public void removeUser(String login) throws SQLException {
 
-        Session session = sessionFactory.openSession();
-        Transaction tx;
+        session = sessionFactory.openSession();
         tx = session.beginTransaction();
         Query query = session.createQuery("from UserModel where login = ?");
         query.setParameter(0, login);

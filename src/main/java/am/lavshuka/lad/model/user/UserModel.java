@@ -5,6 +5,7 @@ import javax.persistence.*;
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
 @Entity
 @Table (name = "users")
 public class UserModel {
@@ -12,19 +13,26 @@ public class UserModel {
     public enum Role {
         ROLE_USER, ROLE_ADMIN
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "login")
     private String login;
+
     @Column(name = "passhash")
     private String passHash;
+
     @Column(name = "firstname")
     private String firstName;
+
     @Column(name = "lastname")
     private String lastName;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "role")
     private Role role;
 
@@ -105,6 +113,4 @@ public class UserModel {
         int result = 31 * login.hashCode() + email.hashCode();
         return result;
     }
-
 }
-

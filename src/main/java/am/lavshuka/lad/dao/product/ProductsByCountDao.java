@@ -1,59 +1,57 @@
 package am.lavshuka.lad.dao.product;
 
-import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.product.ProductsByCount;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
+
 public class ProductsByCountDao {
 
-    private PreparedStatement statement = null;
+    private SessionFactory sessionFactory;
+    private Session session;
+    private Transaction tx;
+
+    public ProductsByCountDao() {
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
 
     public ProductsByCount findProductWithCount(ProductModel productModel) throws SQLException {
 
-        statement = DBconn.getInstance().connection().prepareStatement("SELECT * FROM totalproducts WHERE vendorcode = ?");
-        statement.setString(1, productModel.getVendorCode());
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
 
-        ResultSet result = statement.executeQuery();
+        Query query = session.createQuery("from ProductsByCount where vendorCode = :code");
+        query.setParameter("code", productModel.getVendorCode());
 
-        ProductsByCount product = new ProductsByCount();
+        ProductsByCount product = (ProductsByCount)query.uniqueResult();
 
-        result.next();
-
-        product.setProductName(result.getString(1));
-        product.setVendorCode(result.getString(2));
-        product.setProductId(result.getLong(3));
-        product.setCount(result.getDouble(4));
+        tx.commit();
+        session.close();
 
         return product;
     }
 
     public List<ProductsByCount> findAllProductssWithCount() throws SQLException {
 
-        List<ProductsByCount> list = new ArrayList<>();
-        ProductsByCount product;
+        List<ProductsByCount> list;
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
 
-        statement = DBconn.getInstance().connection().prepareStatement("SELECT * FROM totalproducts");
+        Query query = session.createQuery("from ProductsByCount ");
+        list = query.list();
 
-        ResultSet result = statement.executeQuery();
+        tx.commit();
+        session.close();
 
-        while (result.next()) {
-            product = new ProductsByCount();
-            product.setProductName(result.getString(1));
-            product.setVendorCode(result.getString(2));
-            product.setProductId(result.getLong(3));
-            product.setCount(result.getDouble(4));
-
-            list.add(product);
-        }
         return list;
     }
 }

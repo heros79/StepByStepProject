@@ -15,15 +15,15 @@ public class ProductModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private ProductCategory productCategory;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "type_id")
     private ProductType productType;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "brand_id")
     private ProductBrand productBrand;
 
@@ -42,7 +42,7 @@ public class ProductModel {
     @Column(name = "filepath")
     private String productImageFilePath;
 
-    @OneToMany(mappedBy = "productModel")
+    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productModel")
     private List<BuySellActionProduct> buySellActionProductList;
 
     public ProductModel() {

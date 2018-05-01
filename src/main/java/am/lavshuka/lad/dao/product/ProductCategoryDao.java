@@ -17,12 +17,18 @@ import java.util.List;
 
 public class ProductCategoryDao {
 
-    private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    private SessionFactory sessionFactory;
+    private Session session;
+    private Transaction tx;
+
+    public ProductCategoryDao() {
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
 
     public void addProductCategoty(ProductCategory category) throws SQLException {
 
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
+        session = sessionFactory.openSession();
+        tx = session.beginTransaction();
         session.save(category);
         tx.commit();
         session.close();
@@ -30,11 +36,10 @@ public class ProductCategoryDao {
 
     public ProductCategory findByCategoryName(String categoryName) throws SQLException {
 
-        Session session = sessionFactory.openSession();
-        Transaction tx;
+        session = sessionFactory.openSession();
         tx = session.beginTransaction();
-        Query query = session.createQuery("from ProductCategory where productCategoryName = ?");
-        query.setParameter(0, categoryName);
+        Query query = session.createQuery("from ProductCategory where productCategoryName = :name");
+        query.setParameter("name", categoryName);
 
         ProductCategory productCategory = (ProductCategory) query.uniqueResult();
         tx.commit();
@@ -47,8 +52,7 @@ public class ProductCategoryDao {
 
         List<ProductCategory> list = new ArrayList<>();
 
-        Session session = sessionFactory.openSession();
-        Transaction tx;
+        session = sessionFactory.openSession();
         tx = session.beginTransaction();
         Query query = session.createQuery("from ProductCategory ");
         list = query.list();

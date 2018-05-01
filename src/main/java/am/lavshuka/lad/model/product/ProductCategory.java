@@ -18,10 +18,10 @@ public class ProductCategory {
     @Column(name = "categoryname")
     private String productCategoryName;
 
-    @OneToMany (mappedBy = "productCategory")
+    @OneToMany (fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productCategory")
     private Set<ProductType> productTypeSet;
 
-    @OneToMany (mappedBy = "productCategory")
+    @OneToMany (fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productCategory")
     private Set<ProductModel> productModelSet;
 
     public ProductCategory() {

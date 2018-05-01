@@ -15,7 +15,7 @@ public class BuySellActionProduct {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private ProductModel productModel;
 
@@ -23,9 +23,11 @@ public class BuySellActionProduct {
     private Integer count;
 
     @Column(name = "buydate")
+    @Temporal(TemporalType.DATE)
     private Date productBuyDate;
 
     @Column(name = "selldate")
+    @Temporal(TemporalType.DATE)
     private Date productSellDate;
 
     public BuySellActionProduct() {
