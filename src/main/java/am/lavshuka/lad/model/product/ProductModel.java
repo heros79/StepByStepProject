@@ -1,5 +1,9 @@
 package am.lavshuka.lad.model.product;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,6 +11,9 @@ import java.util.List;
  * Created by @Author David Karchikyan on 4/19/2018.
  */
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "products")
 public class ProductModel {
@@ -44,89 +51,6 @@ public class ProductModel {
 
     @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productModel")
     private List<BuySellActionProduct> buySellActionProductList;
-
-    public ProductModel() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ProductCategory getProductCategory() {
-        return productCategory;
-    }
-
-    public void setProductCategory(ProductCategory productCategory) {
-        this.productCategory = productCategory;
-    }
-
-    public ProductType getProductType() {
-        return productType;
-    }
-
-    public void setProductType(ProductType productType) {
-        this.productType = productType;
-    }
-
-    public ProductBrand getProductBrand() {
-        return productBrand;
-    }
-
-    public void setProductBrand(ProductBrand productBrand) {
-        this.productBrand = productBrand;
-    }
-
-    public String getVendorCode() {
-        return vendorCode;
-    }
-
-    public void setVendorCode(String vendorCode) {
-        this.vendorCode = vendorCode;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getProductImageFilePath() {
-        return productImageFilePath;
-    }
-
-    public void setProductImageFilePath(String productImageFilePath) {
-        this.productImageFilePath = productImageFilePath;
-    }
-
-    public List<BuySellActionProduct> getBuySellActionProductList() {
-        return buySellActionProductList;
-    }
-
-    public void setBuySellActionProductList(List<BuySellActionProduct> buySellActionProductList) {
-        this.buySellActionProductList = buySellActionProductList;
-    }
 
     @Override
     public boolean equals(Object o) {

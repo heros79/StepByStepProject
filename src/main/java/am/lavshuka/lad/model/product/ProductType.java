@@ -1,5 +1,9 @@
 package am.lavshuka.lad.model.product;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,6 +11,9 @@ import java.util.Set;
  * Created by @Author David Karchikyan on 4/19/2018.
  */
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "prodtype")
 public class ProductType {
@@ -24,39 +31,4 @@ public class ProductType {
 
     @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productType")
     private Set<ProductModel> productModelSet;
-
-    public ProductType() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ProductCategory getProductCategory() {
-        return productCategory;
-    }
-
-    public void setProductCategory(ProductCategory productCategory) {
-        this.productCategory = productCategory;
-    }
-
-    public String getProductTypeName() {
-        return productTypeName;
-    }
-
-    public void setProductTypeName(String productTypeName) {
-        this.productTypeName = productTypeName;
-    }
-
-    public Set<ProductModel> getProductModelSet() {
-        return productModelSet;
-    }
-
-    public void setProductModelSet(Set<ProductModel> productModelSet) {
-        this.productModelSet = productModelSet;
-    }
 }

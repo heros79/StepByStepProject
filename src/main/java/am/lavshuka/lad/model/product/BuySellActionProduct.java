@@ -1,5 +1,9 @@
 package am.lavshuka.lad.model.product;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,6 +11,9 @@ import java.util.Date;
  * Created by @Author David Karchikyan on 4/19/2018.
  */
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "productbuysell")
 public class BuySellActionProduct {
@@ -29,47 +36,4 @@ public class BuySellActionProduct {
     @Column(name = "selldate")
     @Temporal(TemporalType.DATE)
     private Date productSellDate;
-
-    public BuySellActionProduct() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ProductModel getProductModel() {
-        return productModel;
-    }
-
-    public void setProductModel(ProductModel productModel) {
-        this.productModel = productModel;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public Date getProductBuyDate() {
-        return productBuyDate;
-    }
-
-    public void setProductBuyDate(Date productBuyDate) {
-        this.productBuyDate = productBuyDate;
-    }
-
-    public Date getProductSellDate() {
-        return productSellDate;
-    }
-
-    public void setProductSellDate(Date productSellDate) {
-        this.productSellDate = productSellDate;
-    }
 }
