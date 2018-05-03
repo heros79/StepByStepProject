@@ -3,6 +3,7 @@ package am.lavshuka.lad.dao.product;
 import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.product.BuySellActionProduct;
 import am.lavshuka.lad.model.product.ProductModel;
+import org.hibernate.HibernateException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class BuySellActionProductDaoTest {
             product = new ProductDao().findByVendorCode("soap-1");
             new BuySellActionProductDao().buyProduct(product, 1000000, new Date());
             new BuySellActionProductDao().sellProduct(product, 1000000, new Date());
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("SQL exeption in buyProduct or SellProduct methods");
         }
     }

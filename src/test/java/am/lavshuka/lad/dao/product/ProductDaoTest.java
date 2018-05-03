@@ -5,6 +5,7 @@ import am.lavshuka.lad.model.product.ProductBrand;
 import am.lavshuka.lad.model.product.ProductCategory;
 import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.product.ProductType;
+import org.hibernate.HibernateException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class ProductDaoTest {
             productModel.setProductImageFilePath("test");
 
             new ProductDao().addProduct(productModel);
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL exeption addProduct method");
         }
     }
@@ -47,7 +48,7 @@ public class ProductDaoTest {
 
         try {
             productModel = new ProductDao().findByVendorCode("test");
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL exeption findByVendorCode method");
         }
 
@@ -166,7 +167,7 @@ public class ProductDaoTest {
             new ProductDao().changeProductData(productModel, null, null);
             fail("Or Product object is null or price and description param is null");
         } catch (IllegalArgumentException e) {
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL exeption");
         }
 
@@ -176,7 +177,7 @@ public class ProductDaoTest {
             productModel = new ProductDao().findByVendorCode("test");
             new ProductDao().changeProductData(productModel, price, null);
             productModel = new ProductDao().findByVendorCode("test");
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL exeption changeProductData method with price param");
         }
 
@@ -188,7 +189,7 @@ public class ProductDaoTest {
             productModel = new ProductDao().findByVendorCode("test");
             new ProductDao().changeProductData(productModel, null, description);
             productModel = new ProductDao().findByVendorCode("test");
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL exeption changeProductData method with description param");
         }
 
@@ -198,8 +199,9 @@ public class ProductDaoTest {
     @After
     public void removeProductTest() {
         try {
-            new ProductDao().removeProduct("test");
-        } catch (SQLException e) {
+            ProductModel product = new ProductDao().findByVendorCode("test");
+            new ProductDao().removeProduct(product);
+        } catch (HibernateException e) {
             fail("Any SQL exeption removeProduct method");
         }
         productModel = null;

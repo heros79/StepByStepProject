@@ -2,76 +2,29 @@ package am.lavshuka.lad.dao.product;
 
 import am.lavshuka.lad.model.product.ProductCategory;
 import am.lavshuka.lad.model.product.ProductType;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-import java.sql.SQLException;
+
 import java.util.List;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
  */
 
-public class ProductTypeDao {
+public class ProductTypeDao extends AbstractMainProduct<ProductType> {
 
-    private SessionFactory sessionFactory;
-    private Session session;
-    private Transaction tx;
-
-    public ProductTypeDao() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
+    public void addProductType(ProductType productType) {
+        super.add(productType);
     }
 
-    public void addProductType(ProductType productType) throws SQLException {
-
-        session = sessionFactory.openSession();
-        tx = session.beginTransaction();
-        session.save(productType);
-        tx.commit();
-        session.close();
+    public ProductType findByTypeName(String typeName) {
+        String s = "from ProductType where productTypeName";
+        return super.find(s, typeName);
     }
 
-    public ProductType findByTypeName(String typeName) throws SQLException {
-
-        session = sessionFactory.openSession();
-        tx = session.beginTransaction();;
-        Query query = session.createQuery("from ProductType where productTypeName = :name");
-        query.setParameter("name", typeName);
-
-        ProductType productType = (ProductType)query.uniqueResult();
-
-        tx.commit();
-        session.close();
-
-        return productType;
+    public List<ProductType> findAllProductType() {
+        return super.findAll(ProductType.class);
     }
 
-    public List<ProductType> findAllProductType() throws SQLException {
-
-        List<ProductType> list;
-        session = sessionFactory.openSession();
-        tx = session.beginTransaction();
-
-        Query query = session.createQuery("FROM ProductType");
-
-        list = query.list();
-
-        return list;
-    }
-
-    public List<ProductType> findAllByProductCategory(ProductCategory productCategory) throws SQLException {
-
-        List<ProductType> list;
-        session = sessionFactory.openSession();
-        tx = session.beginTransaction();
-
-        Query query = session.createQuery("FROM ProductType WHERE productCategory = :category");
-        query.setParameter("category", productCategory);
-
-        list = query.list();
-
-        return list;
+    public List<ProductType> findAllTypesByProductCategory(ProductCategory productCategory) {
+        return super.findAllByProductCategory(ProductType.class, productCategory);
     }
 }

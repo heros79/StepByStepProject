@@ -2,13 +2,16 @@ package am.lavshuka.lad.dao.product;
 
 import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.product.ProductCategory;
+import org.hibernate.HibernateException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -22,15 +25,13 @@ public class ProductCategoryDaoTest {
     private ProductCategory productCategory = new ProductCategory();
 
     @Before
-    public void addProductCategotyTest() {
+    public void addProductCategoryTest() {
 
         productCategory.setProductCategoryName("test");
-
         try {
-            new ProductCategoryDao().addProductCategoty(productCategory);
-        } catch (SQLException e) {
-            fail("Any SQL Exeption addProductCategoty method");
-
+            new ProductCategoryDao().add(productCategory);
+        } catch (HibernateException e) {
+            fail("Any SQL Exeption addProductCategory method");
         }
     }
 
@@ -39,7 +40,7 @@ public class ProductCategoryDaoTest {
 
         try {
             productCategory = new ProductCategoryDao().findByCategoryName("test");
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption findByCategoryName method");
         }
         assertEquals(productCategory.getProductCategoryName(), "test");

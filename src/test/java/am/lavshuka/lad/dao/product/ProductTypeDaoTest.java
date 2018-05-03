@@ -3,6 +3,7 @@ package am.lavshuka.lad.dao.product;
 import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.product.ProductCategory;
 import am.lavshuka.lad.model.product.ProductType;
+import org.hibernate.HibernateException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class ProductTypeDaoTest {
             productType.setProductCategory(new ProductCategoryDao().findByCategoryName("household"));
             productType.setProductTypeName("test");
             new ProductTypeDao().addProductType(productType);
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption in addProductType method");
         }
     }
@@ -38,7 +39,7 @@ public class ProductTypeDaoTest {
 
         try {
             productType = new ProductTypeDao().findByTypeName("test");
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption in findByTypeName method");
         }
 
@@ -65,7 +66,7 @@ public class ProductTypeDaoTest {
     }
 
     @Test
-    public void findAllByProductCategoryTest() {
+    public void findAllTypesByProductCategoryTest() {
         PreparedStatement statement;
         List<ProductType> list = null;
         ProductCategory productCategory = null;
@@ -73,7 +74,7 @@ public class ProductTypeDaoTest {
 
         try {
             productCategory = new ProductCategoryDao().findByCategoryName("household");
-            list = new ProductTypeDao().findAllByProductCategory(productCategory);
+            list = new ProductTypeDao().findAllTypesByProductCategory(productCategory);
             statement = DBconn.getInstance().connection().prepareStatement("SELECT COUNT(*) FROM prodtype " +
                     "WHERE category_id = ?");
             statement.setLong(1, productCategory.getId());

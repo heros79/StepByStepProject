@@ -2,6 +2,7 @@ package am.lavshuka.lad.dao.product;
 
 import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.product.ProductBrand;
+import org.hibernate.HibernateException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class ProductBrandDaoTest {
 
         try {
             new ProductBrandDao().addProductBrand(productBrand);
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption addProductBrand method");
         }
     }
@@ -38,7 +39,7 @@ public class ProductBrandDaoTest {
 
         try {
             productBrand = new ProductBrandDao().findByProductBrandName("test");
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption findByProductBrandName method");
         }
 

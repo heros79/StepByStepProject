@@ -3,6 +3,7 @@ package am.lavshuka.lad.dao.product;
 import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.product.ProductsByCount;
+import org.hibernate.HibernateException;
 import org.junit.Test;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +27,7 @@ public class ProductsByCountDaoTest {
         try {
             product = new ProductDao().findByVendorCode("soap-1");
             productsByCount = new ProductsByCountDao().findProductWithCount(product);
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL exeption in findProductWithCount method");
         }
 

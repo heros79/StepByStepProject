@@ -70,5 +70,13 @@ CREATE TABLE productbuysell (
   ENGINE = InnoDB;
 
 /* Create View Products by count sum */
-CREATE VIEW totalproducts (productname, vendorcode, product_id, count)AS SELECT  productname, vendorcode, product_id , SUM(count)
-FROM products, productbuysell WHERE product_id = products.id GROUP BY product_id;
+CREATE VIEW totalproducts AS
+  SELECT
+    productname AS productname,
+    vendorcode AS vendorcode,
+    product_id AS product_id,
+    SUM(`count`) AS `count`
+  FROM products
+    JOIN productbuysell
+  WHERE (productbuysell.product_id = products.id)
+  GROUP BY product_id;
