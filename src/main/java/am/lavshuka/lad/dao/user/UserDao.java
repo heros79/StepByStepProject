@@ -78,6 +78,23 @@ public class UserDao {
         session.close();
     }
 
+    public void addOrRemoveMoney(UserModel userModel, int money) {
+
+        if (userModel == null || money <= 0) {
+            throw new IllegalArgumentException();
+        }
+
+        userModel.setMoney(userModel.getMoney() + money);
+
+        session = AbstractMainProduct.getSessionFactory().openSession();
+        tx = session.beginTransaction();
+
+        session.update(userModel);
+
+        tx.commit();
+        session.close();
+    }
+
     public void removeUser(String login) {
 
         session = AbstractMainProduct.getSessionFactory().openSession();
