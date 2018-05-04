@@ -42,6 +42,9 @@ public class UserModel implements Serializable {
     @Column(name = "lastname")
     private String lastName;
 
+    @Column(name = "money")
+    private Integer money;
+
     @Column(name = "email")
     private String email;
 

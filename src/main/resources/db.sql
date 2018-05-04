@@ -5,6 +5,7 @@ CREATE TABLE users (
   passhash VARCHAR(100) NOT NULL,
   firstname VARCHAR(100) NOT NULL,
   lastname VARCHAR(100) NOT NULL,
+  money INT,
   email VARCHAR(100) NOT NULL UNIQUE,
   role INT NOT NULL
 )

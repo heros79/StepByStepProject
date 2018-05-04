@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public boolean loginUser (String login, String pass) {
-        this.userModel = new UserDao().findByLogin(login);
+        userModel = new UserDao().findByLogin(login);
 
         if (userModel == null) {
             return false;
