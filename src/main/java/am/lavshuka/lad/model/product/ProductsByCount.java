@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "totalproducts")
-public class ProductsByCount {
+public class ProductsByCount implements Serializable {
 
     @Column(name = "product_id")
     private Long productId;

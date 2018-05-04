@@ -19,7 +19,7 @@ public class UserDao {
     private Session session;
     private Transaction tx;
 
-    public void addUser(UserModel userModel) throws SQLException {
+    public void addUser(UserModel userModel) {
 
         session = AbstractMainProduct.getSessionFactory().openSession();
         tx = session.beginTransaction();
@@ -28,7 +28,7 @@ public class UserDao {
         session.close();
     }
 
-    public UserModel findByLogin(String login) throws SQLException {
+    public UserModel findByLogin(String login) {
 
         session = AbstractMainProduct.getSessionFactory().openSession();
 
@@ -42,7 +42,7 @@ public class UserDao {
         return userModel;
     }
 
-    public List<UserModel> findAll() throws SQLException {
+    public List<UserModel> findAll() {
 
         List<UserModel> list = new ArrayList<UserModel>();
 
@@ -56,7 +56,7 @@ public class UserDao {
         return list;
     }
 
-    public void changeUserData(UserModel userModel, String password, String email) throws SQLException {
+    public void changeUserData(UserModel userModel, String password, String email) {
 
         if (userModel == null || (password == null && email == null)) {
             throw new IllegalArgumentException();
@@ -78,7 +78,7 @@ public class UserDao {
         session.close();
     }
 
-    public void removeUser(String login) throws SQLException {
+    public void removeUser(String login) {
 
         session = AbstractMainProduct.getSessionFactory().openSession();
         tx = session.beginTransaction();

@@ -6,6 +6,8 @@ import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.product.ProductType;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,15 +33,21 @@ public class ProductDao extends AbstractMainProduct<ProductModel>{
     }
 
     public List<ProductModel> findProductsByCategory(ProductCategory productCategory) {
-        return super.findAllByProductCategory(ProductModel.class, productCategory);
+        List<ProductModel> list = new ArrayList<>();
+        list.addAll(productCategory.getProductModelSet());
+        return list;
     }
 
     public List<ProductModel> findProductsByType(ProductType productType) {
-        return super.findAllByProductType(ProductModel.class, productType);
+        List<ProductModel> list = new ArrayList<>();
+        list.addAll(productType.getProductModelSet());
+        return list;
     }
 
     public List<ProductModel> findProductsByBrand(ProductBrand productBrand) {
-        return super.findAllByProductBrand(ProductModel.class, productBrand);
+        List<ProductModel> list = new ArrayList<>();
+        list.addAll(productBrand.getProductModelSet());
+        return list;
     }
 
     public void changeProductData(ProductModel productModel, Double price, String description) {

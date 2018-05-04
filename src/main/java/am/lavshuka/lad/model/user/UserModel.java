@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
@@ -18,7 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table (name = "users")
-public class UserModel {
+public class UserModel implements Serializable {
 
     public enum Role {
         ROLE_USER, ROLE_ADMIN

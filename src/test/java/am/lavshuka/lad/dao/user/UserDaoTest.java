@@ -2,6 +2,7 @@ package am.lavshuka.lad.dao.user;
 
 import am.lavshuka.lad.dao.DBconn;
 import am.lavshuka.lad.model.user.UserModel;
+import org.hibernate.HibernateException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class UserDaoTest {
 
         try {
             new UserDao().addUser(userModel);
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption addUser method");
         }
     }
@@ -42,7 +43,7 @@ public class UserDaoTest {
     public void findByLoginTest() {
         try {
             userModel = new UserDao().findByLogin("test");
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption findByLogin method");
         }
         assertEquals(userModel.getLastName(), "test");
@@ -76,7 +77,7 @@ public class UserDaoTest {
             new UserDao().changeUserData(userModel, null, null);
             fail("Or User object is null or both String param null");
         } catch (IllegalArgumentException e) {
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption changeUserData method");
         }
 
@@ -84,7 +85,7 @@ public class UserDaoTest {
         try {
             new UserDao().changeUserData(userModel, password, null);
             userModel = new UserDao().findByLogin("test");
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption changeUserData method");
         }
 
@@ -95,7 +96,7 @@ public class UserDaoTest {
         try {
             new UserDao().changeUserData(userModel, null, email);
             userModel = new UserDao().findByLogin("test");
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption changeUserData method");
         }
 
@@ -107,7 +108,7 @@ public class UserDaoTest {
 
         try {
             new UserDao().removeUser("test");
-        } catch (SQLException e) {
+        } catch (HibernateException e) {
             fail("Any SQL Exeption removeUser method");
         }
 

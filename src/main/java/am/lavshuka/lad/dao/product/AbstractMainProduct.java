@@ -21,6 +21,15 @@ public class AbstractMainProduct <T> {
     private Session session;
     private Transaction tx;
 
+    private static SessionFactory sessionFactory;
+
+    public static SessionFactory getSessionFactory() {
+
+        if (sessionFactory == null)
+            return sessionFactory = new Configuration().configure().buildSessionFactory();
+        return sessionFactory;
+    }
+
     protected void add(T t) {
         session = getSessionFactory().openSession();
         tx = session.beginTransaction();
@@ -53,44 +62,5 @@ public class AbstractMainProduct <T> {
         session.delete(t);
         tx.commit();
         session.close();
-    }
-
-    protected List<T> findAllByProductCategory(Class<T> t, ProductCategory productCategory) {
-        List<T> list;
-        session = getSessionFactory().openSession();
-        Query query = session.createQuery("from " + t.getName() + " WHERE productCategory = :category");
-        query.setParameter("category", productCategory);
-        list = query.list();
-        session.close();
-        return list;
-    }
-
-    protected List<T> findAllByProductType(Class<T> t, ProductType productType) {
-        List<T> list;
-        session = getSessionFactory().openSession();
-        Query query = session.createQuery("from " + t.getName() + " WHERE productType = :type");
-        query.setParameter("type", productType);
-        list = query.list();
-        session.close();
-        return list;
-    }
-
-    protected List<T> findAllByProductBrand(Class<T> t, ProductBrand productBrand) {
-        List<T> list;
-        session = getSessionFactory().openSession();
-        Query query = session.createQuery("from " + t.getName() + " WHERE productBrand = :brand");
-        query.setParameter("brand", productBrand);
-        list = query.list();
-        session.close();
-        return list;
-    }
-
-    private static SessionFactory sessionFactory;
-
-    public static SessionFactory getSessionFactory() {
-
-        if (sessionFactory == null)
-            return sessionFactory = new Configuration().configure().buildSessionFactory();
-        return sessionFactory;
     }
 }

@@ -3,6 +3,7 @@ package am.lavshuka.lad.dao.product;
 import am.lavshuka.lad.model.product.ProductCategory;
 import am.lavshuka.lad.model.product.ProductType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +26,8 @@ public class ProductTypeDao extends AbstractMainProduct<ProductType> {
     }
 
     public List<ProductType> findAllTypesByProductCategory(ProductCategory productCategory) {
-        return super.findAllByProductCategory(ProductType.class, productCategory);
+        List<ProductType> list = new ArrayList<>();
+        list.addAll(productCategory.getProductTypeSet());
+        return list;
     }
 }
