@@ -13,10 +13,6 @@ public class BuySellActionProductDao extends AbstractMainProduct<BuySellActionPr
 
     private Session session;
 
-    public void buySellProduct(BuySellActionProduct product) {
-        super.add(product);
-    }
-
     public List<BuySellActionProduct> findBuyProductByDate(java.util.Date date) {
         List<BuySellActionProduct> list;
         session = super.getSessionFactory().openSession();

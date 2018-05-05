@@ -65,7 +65,7 @@ public class UserService {
     }
 
     public void buyProduct(UserModel userModel, ProductModel productModel,
-                           BuySellActionProduct product, int count, Date date) {
+                           int count, Date date) {
 
         if (userModel == null || productModel == null || count <= 0)
             throw new IllegalArgumentException();
@@ -75,6 +75,7 @@ public class UserService {
         if (userModel.getMoney() < producteSum)
             throw new IllegalArgumentException();
 
+        BuySellActionProduct product = new BuySellActionProduct();
         product.setProductModel(productModel);
         product.setProductSellDate(date);
         product.setCount(-count);
