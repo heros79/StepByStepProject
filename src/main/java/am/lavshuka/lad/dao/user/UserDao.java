@@ -1,13 +1,13 @@
 package am.lavshuka.lad.dao.user;
 
 import am.lavshuka.lad.dao.product.AbstractMainProduct;
+import am.lavshuka.lad.dao.product.BuySellActionProductDao;
+import am.lavshuka.lad.model.product.BuySellActionProduct;
 import am.lavshuka.lad.model.user.UserModel;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,91 +20,47 @@ public class UserDao {
     private Transaction tx;
 
     public void addUser(UserModel userModel) {
-
         session = AbstractMainProduct.getSessionFactory().openSession();
-        tx = session.beginTransaction();
         session.save(userModel);
-        tx.commit();
         session.close();
     }
 
     public UserModel findByLogin(String login) {
-
         session = AbstractMainProduct.getSessionFactory().openSession();
-
         Query query = session.createQuery("from UserModel where login = :login");
         query.setParameter("login", login);
-
         UserModel userModel = (UserModel) query.uniqueResult();
-
         session.close();
-
         return userModel;
     }
 
     public List<UserModel> findAll() {
-
-        List<UserModel> list = new ArrayList<UserModel>();
-
+        List<UserModel> list;
         session = AbstractMainProduct.getSessionFactory().openSession();
-
         Query query = session.createQuery("from UserModel");
         list = query.list();
-
         session.close();
-
         return list;
     }
 
-    public void changeUserData(UserModel userModel, String password, String email) {
+    public void changeUserData(UserModel userModel) {
+        session = AbstractMainProduct.getSessionFactory().openSession();
+        session.update(userModel);
+        session.close();
+    }
 
-        if (userModel == null || (password == null && email == null)) {
-            throw new IllegalArgumentException();
-        }
-
+    public void BuyProduct(UserModel userModel, BuySellActionProduct productModel) {
         session = AbstractMainProduct.getSessionFactory().openSession();
         tx = session.beginTransaction();
-
-        if (password != null) {
-            userModel.setPassHash(password);
-        }
-
-        if (email != null) {
-            userModel.setEmail(email);
-        }
-
-        session.update(userModel);
+        changeUserData(userModel);
+        new BuySellActionProductDao().buySellProduct(productModel);
         tx.commit();
         session.close();
     }
 
-    public void addOrRemoveMoney(UserModel userModel, int money) {
-
-        if (userModel == null || money <= 0) {
-            throw new IllegalArgumentException();
-        }
-
-        userModel.setMoney(userModel.getMoney() + money);
-
+    public void removeUser(UserModel userModel) {
         session = AbstractMainProduct.getSessionFactory().openSession();
-        tx = session.beginTransaction();
-
-        session.update(userModel);
-
-        tx.commit();
-        session.close();
-    }
-
-    public void removeUser(String login) {
-
-        session = AbstractMainProduct.getSessionFactory().openSession();
-        tx = session.beginTransaction();
-        Query query = session.createQuery("from UserModel where login = :login");
-        query.setParameter("login", login);
-
-        UserModel userModel = (UserModel) query.uniqueResult();
         session.delete(userModel);
-        tx.commit();
         session.close();
     }
 }

@@ -1,7 +1,11 @@
 package am.lavshuka.lad.service;
 
 import am.lavshuka.lad.dao.user.UserDao;
+import am.lavshuka.lad.model.product.BuySellActionProduct;
+import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.user.UserModel;
+
+import java.util.Date;
 
 /**
  * Created by David on 5/4/2018.
@@ -17,7 +21,7 @@ public class UserService {
         if (this.userModel != null || this.userModel.getEmail().equals(userModel.getEmail())) {
             throw new IllegalArgumentException();
         } else if (userModel.getLogin() == null || userModel.getPassHash() == null ||
-                userModel.getFirstName() == null || userModel.getLastName() == null){
+                userModel.getFirstName() == null || userModel.getLastName() == null) {
             throw new IllegalArgumentException();
         } else userModel.setPassHash(codingPass(userModel.getPassHash()));
 
@@ -26,8 +30,8 @@ public class UserService {
         new UserDao().addUser(userModel);
     }
 
-    public boolean loginUser (String login, String pass) {
-        userModel = new UserDao().findByLogin(login);
+    public boolean loginUser(String login, String pass) {
+        this.userModel = new UserDao().findByLogin(login);
 
         if (userModel == null) {
             return false;
@@ -38,16 +42,49 @@ public class UserService {
         return true;
     }
 
-    public void changeUserData (UserModel userModel, String pass, String email) {
+    public void changeUserData(UserModel userModel, String pass, String email) {
 
-        if (pass != null)
+        if (userModel == null || (pass == null && email == null))
+            throw new IllegalArgumentException();
+
+        if (pass != null) {
             pass = codingPass(pass);
+            userModel.setPassHash(pass);
+        }
 
-        new UserDao().changeUserData(userModel, pass, email);
+        if (email != null)
+            userModel.setEmail(email);
+
+        new UserDao().changeUserData(userModel);
+    }
+
+    public void addMoney(UserModel userModel, double money) {
+
+       if (userModel == null || money <= 0)
+           throw new IllegalArgumentException();
+    }
+
+    public void buyProduct(UserModel userModel, ProductModel productModel,
+                           BuySellActionProduct product, int count, Date date) {
+
+        if (userModel == null || productModel == null || count <= 0)
+            throw new IllegalArgumentException();
+
+        double producteSum = productModel.getPrice() * count;
+
+        if (userModel.getMoney() < producteSum)
+            throw new IllegalArgumentException();
+
+        product.setProductModel(productModel);
+        product.setProductSellDate(date);
+        product.setCount(-count);
+
+        userModel.setMoney(userModel.getMoney() - producteSum);
+        new UserDao().BuyProduct(userModel, product);
     }
 
     public void unRegisterUser(UserModel userModel) {
-        new UserDao().removeUser(userModel.getLogin());
+        new UserDao().removeUser(userModel);
     }
 
     private String codingPass(String s) {

@@ -1,11 +1,7 @@
 package am.lavshuka.lad.dao.product;
 
-import am.lavshuka.lad.model.product.ProductBrand;
-import am.lavshuka.lad.model.product.ProductCategory;
-import am.lavshuka.lad.model.product.ProductType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
@@ -19,7 +15,6 @@ import java.util.List;
 public class AbstractMainProduct <T> {
 
     private Session session;
-    private Transaction tx;
 
     private static SessionFactory sessionFactory;
 
@@ -32,9 +27,7 @@ public class AbstractMainProduct <T> {
 
     protected void add(T t) {
         session = getSessionFactory().openSession();
-        tx = session.beginTransaction();
         session.save(t);
-        tx.commit();
         session.close();
     }
 
@@ -58,9 +51,7 @@ public class AbstractMainProduct <T> {
 
     protected void remove(T t) {
         session = getSessionFactory().openSession();
-        tx = session.beginTransaction();
         session.delete(t);
-        tx.commit();
         session.close();
     }
 }

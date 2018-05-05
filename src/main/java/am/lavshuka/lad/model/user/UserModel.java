@@ -43,7 +43,7 @@ public class UserModel implements Serializable {
     private String lastName;
 
     @Column(name = "money")
-    private Integer money;
+    private Double money;
 
     @Column(name = "email")
     private String email;
