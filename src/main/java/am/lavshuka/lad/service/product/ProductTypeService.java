@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by David on 5/5/2018.
  */
+
 public class ProductTypeService {
 
     public void addProductType(ProductType productType) {
