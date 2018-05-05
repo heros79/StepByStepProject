@@ -24,7 +24,7 @@ public class ProductTypeService {
         return new ProductTypeDao().findAll(ProductType.class);
     }
 
-    public List<ProductType> findProductTypeByCategory() {
-        return (List<ProductType>) new ProductCategory().getProductTypeSet();
+    public List<ProductType> findProductTypeByCategory(ProductCategory productCategory) {
+        return (List<ProductType>) productCategory.getProductTypeSet();
     }
 }
