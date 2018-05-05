@@ -53,7 +53,7 @@ public class UserDao {
         session = AbstractMainProduct.getSessionFactory().openSession();
         tx = session.beginTransaction();
         changeUserData(userModel);
-        new BuySellActionProductDao().buySellProduct(productModel);
+        new BuySellActionProductDao().add(productModel);
         tx.commit();
         session.close();
     }
