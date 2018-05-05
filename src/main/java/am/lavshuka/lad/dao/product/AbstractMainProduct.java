@@ -25,13 +25,13 @@ public class AbstractMainProduct <T> {
         return sessionFactory;
     }
 
-    protected void add(T t) {
+    public void add(T t) {
         session = getSessionFactory().openSession();
         session.save(t);
         session.close();
     }
 
-    protected T find(String sql, String searchParam) {
+    public T find(String sql, String searchParam) {
         session = getSessionFactory().openSession();
         Query <T> query = session.createQuery(sql + " = :name");
         query.setParameter("name", searchParam);
@@ -40,7 +40,7 @@ public class AbstractMainProduct <T> {
         return t;
     }
 
-    protected List<T> findAll(Class<T> t) {
+    public List<T> findAll(Class<T> t) {
         List<T> list = new ArrayList<>();
         session = getSessionFactory().openSession();
         Query query = session.createQuery("from " + t.getName());
@@ -49,7 +49,7 @@ public class AbstractMainProduct <T> {
         return list;
     }
 
-    protected void remove(T t) {
+    public void remove(T t) {
         session = getSessionFactory().openSession();
         session.delete(t);
         session.close();

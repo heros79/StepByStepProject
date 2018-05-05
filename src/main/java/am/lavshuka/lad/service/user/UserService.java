@@ -1,4 +1,4 @@
-package am.lavshuka.lad.service;
+package am.lavshuka.lad.service.user;
 
 import am.lavshuka.lad.dao.user.UserDao;
 import am.lavshuka.lad.model.product.BuySellActionProduct;
