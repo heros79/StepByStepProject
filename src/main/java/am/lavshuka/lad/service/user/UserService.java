@@ -13,17 +13,29 @@ import java.util.Date;
 
 public class UserService {
 
-    private UserModel userModel;
+    private UserModel userModel = null;
 
     public void registerUser(UserModel userModel) {
+
+        if (userModel.getLogin() == null || userModel.getPassHash() == null ||
+                userModel.getFirstName() == null || userModel.getLastName() == null ||
+                userModel.getEmail() == null) {
+            throw new NullPointerException();
+        }
+
         this.userModel = new UserDao().findByLogin(userModel.getLogin());
 
-        if (this.userModel != null || this.userModel.getEmail().equals(userModel.getEmail())) {
+        if (userModel.getLogin().equalsIgnoreCase(this.userModel.getLogin())) {
             throw new IllegalArgumentException();
-        } else if (userModel.getLogin() == null || userModel.getPassHash() == null ||
-                userModel.getFirstName() == null || userModel.getLastName() == null) {
+        }
+
+        this.userModel = new UserDao().findByEmail(userModel.getEmail());
+
+        if (userModel.getEmail().equalsIgnoreCase(this.userModel.getEmail())) {
             throw new IllegalArgumentException();
-        } else userModel.setPassHash(codingPass(userModel.getPassHash()));
+        }
+
+        userModel.setPassHash(codingPass(userModel.getPassHash()));
 
         userModel.setRole(UserModel.Role.ROLE_USER);
 
@@ -35,7 +47,9 @@ public class UserService {
 
         if (userModel == null) {
             return false;
-        } else if (!userModel.getPassHash().equals(pass)) {
+        }
+
+        if (!userModel.getPassHash().equals(pass)) {
             return false;
         }
 
@@ -45,7 +59,7 @@ public class UserService {
     public void changeUserData(UserModel userModel, String pass, String email) {
 
         if (userModel == null || (pass == null && email == null))
-            throw new IllegalArgumentException();
+            throw new NullPointerException();
 
         if (pass != null) {
             pass = codingPass(pass);
@@ -60,15 +74,23 @@ public class UserService {
 
     public void addMoney(UserModel userModel, double money) {
 
-       if (userModel == null || money <= 0)
+       if (userModel == null) {
+           throw new NullPointerException();
+       } else if (money <= 0)
            throw new IllegalArgumentException();
+
+       userModel.setMoney(userModel.getMoney() + money);
+       new UserDao().changeUserData(userModel);
     }
 
     public void buyProduct(UserModel userModel, ProductModel productModel,
                            int count, Date date) {
 
-        if (userModel == null || productModel == null || count <= 0)
+        if (userModel == null || productModel == null){
+            throw new NullPointerException();
+        } else if (count <= 0) {
             throw new IllegalArgumentException();
+        }
 
         double producteSum = productModel.getPrice() * count;
 

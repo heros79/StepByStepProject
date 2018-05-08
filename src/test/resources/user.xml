@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+    <users id='1' login='test'  passhash='test'  firstname='fname'  lastname='lname'  money='1000.17' email='test@test.am' role='0'/>
+    <users id='2' login="test1" passhash='test1' firstname='fname1' lastname='lname1' money='2000.43' email='test1@test.am' role='0' />
+    <users id='3' login='test3' passhash='test2' firstname='fname2' lastname='lname2' money='5000.57' email='test2@test.am' role='0' />
+</dataset>

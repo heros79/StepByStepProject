@@ -34,6 +34,15 @@ public class UserDao {
         return userModel;
     }
 
+    public UserModel findByEmail(String email) {
+        session = AbstractMainProduct.getSessionFactory().openSession();
+        Query query = session.createQuery("from UserModel where email = :email");
+        query.setParameter("email", email);
+        UserModel userModel = (UserModel) query.uniqueResult();
+        session.close();
+        return userModel;
+    }
+
     public List<UserModel> findAll() {
         List<UserModel> list;
         session = AbstractMainProduct.getSessionFactory().openSession();
@@ -45,22 +54,25 @@ public class UserDao {
 
     public void changeUserData(UserModel userModel) {
         session = AbstractMainProduct.getSessionFactory().openSession();
-        session.update(userModel);
+        tx = session.beginTransaction();
+        session.merge(userModel);
+        tx.commit();
         session.close();
     }
 
     public void BuyProduct(UserModel userModel, BuySellActionProduct productModel) {
         session = AbstractMainProduct.getSessionFactory().openSession();
         tx = session.beginTransaction();
-        changeUserData(userModel);
         new BuySellActionProductDao().add(productModel);
-        tx.commit();
+        changeUserData(userModel);
         session.close();
     }
 
     public void removeUser(UserModel userModel) {
         session = AbstractMainProduct.getSessionFactory().openSession();
-        session.delete(userModel);
+        tx = session.beginTransaction();
+        session.remove(userModel);
+        tx.commit();
         session.close();
     }
 }

@@ -1,4 +1,4 @@
-package am.lavshuka.lad.dao;
+package am.lavshuka.lad;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
