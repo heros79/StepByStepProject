@@ -6,9 +6,9 @@ import org.dbunit.operation.DatabaseOperation;
 /**
  * Created by David on 5/9/2018.
  */
-public class ProductCategoryServiceTest extends InitDBunit {
+public class ProductServiceTest extends InitDBunit {
 
-    public ProductCategoryServiceTest(String name) {
+    public ProductServiceTest(String name) {
         super(name);
     }
 
