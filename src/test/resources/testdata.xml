@@ -4,4 +4,13 @@
     <users id='1' login='test'  passhash='test'  firstname='fname'  lastname='lname'  money='1000.17' email='test@test.am' role='0'/>
     <users id='2' login="test1" passhash='test1' firstname='fname1' lastname='lname1' money='2000.43' email='test1@test.am' role='0' />
     <users id='3' login='test3' passhash='test2' firstname='fname2' lastname='lname2' money='5000.57' email='test2@test.am' role='0' />
+    <prodcategory id='1' categoryname='household'/>
+    <prodtype id='1' category_id='1' typename='soap'/>
+    <prodbrand id='1' brandname='IKEA'/>
+    <products id='1' category_id='1' type_id='1' brand_id='1' vendorcode='soap-1' productname='testsoap' price='150.50' description='test' filepath='test'/>
+    <productbuysell id='1' product_id='1' count='10' buydate="2000-12-12"/>
+
 </dataset>
+
+
+

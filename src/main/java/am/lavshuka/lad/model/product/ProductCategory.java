@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
@@ -26,9 +26,9 @@ public class ProductCategory implements Serializable {
     @Column(name = "categoryname")
     private String productCategoryName;
 
-    @OneToMany (fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productCategory")
-    private Set<ProductType> productTypeSet;
+    @OneToMany (fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productCategory")
+    private List<ProductType> productTypeSet;
 
-    @OneToMany (fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productCategory")
-    private Set<ProductModel> productModelSet;
+    @OneToMany (fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productCategory")
+    private List<ProductModel> productModelSet;
 }

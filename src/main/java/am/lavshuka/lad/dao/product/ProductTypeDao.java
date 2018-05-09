@@ -10,6 +10,6 @@ public class ProductTypeDao extends AbstractMainProduct<ProductType> {
 
     public ProductType findByTypeName(String typeName) {
         String s = "from ProductType where productTypeName";
-        return super.find(s, typeName);
+        return find(s, typeName);
     }
 }

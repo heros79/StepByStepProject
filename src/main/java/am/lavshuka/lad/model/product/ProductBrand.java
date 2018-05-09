@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
@@ -26,6 +26,6 @@ public class ProductBrand implements Serializable {
     @Column(name = "brandname")
     private String productBrandName;
 
-    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productBrand")
-    private Set<ProductModel> productModelSet;
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productBrand")
+    private List<ProductModel> productModelSet;
 }

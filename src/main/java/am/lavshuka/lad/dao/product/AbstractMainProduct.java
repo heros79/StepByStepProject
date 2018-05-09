@@ -12,9 +12,7 @@ import java.util.List;
  * Created by David on 5/2/2018.
  */
 
-public class AbstractMainProduct <T> {
-
-    private Session session;
+public class AbstractMainProduct<T> {
 
     private static SessionFactory sessionFactory;
 
@@ -26,14 +24,14 @@ public class AbstractMainProduct <T> {
     }
 
     public void add(T t) {
-        session = getSessionFactory().openSession();
+        Session session = getSessionFactory().openSession();
         session.save(t);
         session.close();
     }
 
     public T find(String sql, String searchParam) {
-        session = getSessionFactory().openSession();
-        Query <T> query = session.createQuery(sql + " = :name");
+        Session session = getSessionFactory().openSession();
+        Query<T> query = session.createQuery(sql + " = :name");
         query.setParameter("name", searchParam);
         T t = (T) query.uniqueResult();
         session.close();
@@ -42,7 +40,7 @@ public class AbstractMainProduct <T> {
 
     public List<T> findAll(Class<T> t) {
         List<T> list = new ArrayList<>();
-        session = getSessionFactory().openSession();
+        Session session = getSessionFactory().openSession();
         Query query = session.createQuery("from " + t.getName());
         list = query.list();
         session.close();
@@ -50,7 +48,7 @@ public class AbstractMainProduct <T> {
     }
 
     public void remove(T t) {
-        session = getSessionFactory().openSession();
+        Session session = getSessionFactory().openSession();
         session.delete(t);
         session.close();
     }

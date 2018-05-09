@@ -50,7 +50,7 @@ public class ProductModel implements Serializable {
     @Column(name = "filepath")
     private String productImageFilePath;
 
-    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productModel")
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productModel")
     private List<BuySellActionProduct> buySellActionProductList;
 
     @Override

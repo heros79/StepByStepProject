@@ -25,6 +25,6 @@ public class ProductTypeService {
     }
 
     public List<ProductType> findProductTypeByCategory(ProductCategory productCategory) {
-        return (List<ProductType>) productCategory.getProductTypeSet();
+        return productCategory.getProductTypeSet();
     }
 }

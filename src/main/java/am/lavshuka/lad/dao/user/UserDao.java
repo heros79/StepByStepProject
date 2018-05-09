@@ -16,17 +16,14 @@ import java.util.List;
 
 public class UserDao {
 
-    private Session session;
-    private Transaction tx;
-
     public void addUser(UserModel userModel) {
-        session = AbstractMainProduct.getSessionFactory().openSession();
+        Session session = AbstractMainProduct.getSessionFactory().openSession();
         session.save(userModel);
         session.close();
     }
 
     public UserModel findByLogin(String login) {
-        session = AbstractMainProduct.getSessionFactory().openSession();
+        Session session = AbstractMainProduct.getSessionFactory().openSession();
         Query query = session.createQuery("from UserModel where login = :login");
         query.setParameter("login", login);
         UserModel userModel = (UserModel) query.uniqueResult();
@@ -35,7 +32,7 @@ public class UserDao {
     }
 
     public UserModel findByEmail(String email) {
-        session = AbstractMainProduct.getSessionFactory().openSession();
+        Session session = AbstractMainProduct.getSessionFactory().openSession();
         Query query = session.createQuery("from UserModel where email = :email");
         query.setParameter("email", email);
         UserModel userModel = (UserModel) query.uniqueResult();
@@ -45,7 +42,7 @@ public class UserDao {
 
     public List<UserModel> findAll() {
         List<UserModel> list;
-        session = AbstractMainProduct.getSessionFactory().openSession();
+        Session session = AbstractMainProduct.getSessionFactory().openSession();
         Query query = session.createQuery("from UserModel");
         list = query.list();
         session.close();
@@ -53,24 +50,24 @@ public class UserDao {
     }
 
     public void changeUserData(UserModel userModel) {
-        session = AbstractMainProduct.getSessionFactory().openSession();
-        tx = session.beginTransaction();
+        Session session = AbstractMainProduct.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
         session.merge(userModel);
         tx.commit();
         session.close();
     }
 
     public void BuyProduct(UserModel userModel, BuySellActionProduct productModel) {
-        session = AbstractMainProduct.getSessionFactory().openSession();
-        tx = session.beginTransaction();
+        Session session = AbstractMainProduct.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
         new BuySellActionProductDao().add(productModel);
         changeUserData(userModel);
         session.close();
     }
 
     public void removeUser(UserModel userModel) {
-        session = AbstractMainProduct.getSessionFactory().openSession();
-        tx = session.beginTransaction();
+        Session session = AbstractMainProduct.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
         session.remove(userModel);
         tx.commit();
         session.close();

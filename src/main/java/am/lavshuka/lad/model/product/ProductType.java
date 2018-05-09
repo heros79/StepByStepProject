@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
@@ -23,13 +23,13 @@ public class ProductType implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private ProductCategory productCategory;
 
     @Column(name = "typename")
     private String productTypeName;
 
-    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productType")
-    private Set<ProductModel> productModelSet;
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productType")
+    private List<ProductModel> productModelSet;
 }

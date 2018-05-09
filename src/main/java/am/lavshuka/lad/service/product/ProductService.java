@@ -27,15 +27,15 @@ public class ProductService {
     }
 
     public List<ProductModel> findProductsByCategory(ProductCategory productCategory) {
-        return (List<ProductModel>) productCategory.getProductModelSet();
+        return productCategory.getProductModelSet();
     }
 
     public List<ProductModel> findProductsByType(ProductType productType) {
-        return (List<ProductModel>) productType.getProductModelSet();
+        return productType.getProductModelSet();
     }
 
     public List<ProductModel> findProductsByBrand(ProductBrand productBrand) {
-        return (List<ProductModel>) productBrand.getProductModelSet();
+        return productBrand.getProductModelSet();
     }
 
     public void changeProductData(ProductModel productModel, Double price, String description) {

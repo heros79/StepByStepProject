@@ -3,9 +3,12 @@ package am.lavshuka.lad.service.user;
 import am.lavshuka.lad.dao.user.UserDao;
 import am.lavshuka.lad.model.product.BuySellActionProduct;
 import am.lavshuka.lad.model.product.ProductModel;
+import am.lavshuka.lad.model.product.ProductsByCount;
 import am.lavshuka.lad.model.user.UserModel;
+import am.lavshuka.lad.service.product.ProductByCountService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by David on 5/4/2018.
@@ -25,13 +28,13 @@ public class UserService {
 
         this.userModel = new UserDao().findByLogin(userModel.getLogin());
 
-        if (userModel.getLogin().equalsIgnoreCase(this.userModel.getLogin())) {
+        if (this.userModel != null && userModel.getLogin().equalsIgnoreCase(this.userModel.getLogin())) {
             throw new IllegalArgumentException();
         }
 
         this.userModel = new UserDao().findByEmail(userModel.getEmail());
 
-        if (userModel.getEmail().equalsIgnoreCase(this.userModel.getEmail())) {
+        if (this.userModel != null && userModel.getEmail().equalsIgnoreCase(this.userModel.getEmail())) {
             throw new IllegalArgumentException();
         }
 
@@ -91,6 +94,11 @@ public class UserService {
         } else if (count <= 0) {
             throw new IllegalArgumentException();
         }
+
+        ProductsByCount productsByCount = new ProductByCountService().findProductWithTotalCount(productModel);
+
+        if (count > productsByCount.getCount())
+            throw new IllegalArgumentException();
 
         double producteSum = productModel.getPrice() * count;
 
