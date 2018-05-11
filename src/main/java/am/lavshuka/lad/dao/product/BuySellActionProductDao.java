@@ -3,6 +3,7 @@ package am.lavshuka.lad.dao.product;
 import am.lavshuka.lad.model.product.BuySellActionProduct;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * Created by @Author David Karchikyan on 4/19/2018.
  */
 
+@Repository
 public class BuySellActionProductDao extends AbstractMainProduct<BuySellActionProduct> {
 
     public List<BuySellActionProduct> findBuyProductByDate(java.util.Date date) {

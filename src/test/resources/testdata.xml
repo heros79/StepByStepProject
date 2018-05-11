@@ -7,7 +7,10 @@
     <prodcategory id='1' categoryname='household'/>
     <prodtype id='1' category_id='1' typename='soap'/>
     <prodbrand id='1' brandname='IKEA'/>
-    <products id='1' category_id='1' type_id='1' brand_id='1' vendorcode='soap-1' productname='testsoap' price='150.50' description='test' filepath='test'/>
+    <products id='1' category_id='1' type_id='1' brand_id='1' vendorcode='soap-1' productname='testsoap1' price='150.50' description='test' filepath='https://www.ul.com/consumer-retail-services/wp-content/uploads/2017/02/crs-ne-news-bigstock-Cosmetic-Products-103786991.jpg'/>
+    <products id='2' category_id='1' type_id='1' brand_id='1' vendorcode='soap-2' productname='testsoap2' price='150.50' description='test' filepath='http://www.lifebuoy.com/Images/3557/3557-1105384-product-cool_fresh-soap.png'/>
+    <products id='3' category_id='1' type_id='1' brand_id='1' vendorcode='soap-3' productname='testsoap3' price='150.50' description='test' filepath='http://www.thymes.com/Img/Products/Goldleaf-Bar-Soap-0080053007-360.jpg'/>
+    <products id='4' category_id='1' type_id='1' brand_id='1' vendorcode='soap-4' productname='testsoap4' price='150.50' description='test' filepath='https://s3.images-iherb.com/eop/eop12013/u/5.jpg'/>
     <productbuysell id='1' product_id='1' count='10' buydate="2000-12-12"/>
 
 </dataset>

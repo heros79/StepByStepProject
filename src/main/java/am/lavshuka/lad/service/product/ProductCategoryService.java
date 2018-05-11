@@ -2,6 +2,7 @@ package am.lavshuka.lad.service.product;
 
 import am.lavshuka.lad.dao.product.ProductCategoryDao;
 import am.lavshuka.lad.model.product.ProductCategory;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * Created by David on 5/5/2018.
  */
 
+@Service
 public class ProductCategoryService {
 
     public void addProductCategory(ProductCategory productCategory) {

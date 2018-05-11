@@ -5,6 +5,7 @@ import am.lavshuka.lad.model.product.ProductBrand;
 import am.lavshuka.lad.model.product.ProductCategory;
 import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.product.ProductType;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * Created by David on 5/5/2018.
  */
 
+@Service
 public class ProductService {
 
     public void addProduct(ProductModel productModel) {

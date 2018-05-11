@@ -1,15 +1,13 @@
 package am.lavshuka.lad.model.user;
 
-
-
 import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-
 
 /**
  * Created by @Author David Karchikyan on 4/19/2018.
@@ -20,6 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table (name = "users")
+@Component
 public class UserModel implements Serializable {
 
     public enum Role {

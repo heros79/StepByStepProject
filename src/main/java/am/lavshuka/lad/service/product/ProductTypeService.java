@@ -3,6 +3,7 @@ package am.lavshuka.lad.service.product;
 import am.lavshuka.lad.dao.product.ProductTypeDao;
 import am.lavshuka.lad.model.product.ProductCategory;
 import am.lavshuka.lad.model.product.ProductType;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * Created by David on 5/5/2018.
  */
 
+@Service
 public class ProductTypeService {
 
     public void addProductType(ProductType productType) {

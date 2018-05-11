@@ -6,6 +6,7 @@ import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.product.ProductsByCount;
 import am.lavshuka.lad.model.user.UserModel;
 import am.lavshuka.lad.service.product.ProductByCountService;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  * Created by David on 5/4/2018.
  */
 
+@Service
 public class UserService {
 
     private UserModel userModel = null;
@@ -52,11 +54,15 @@ public class UserService {
             return false;
         }
 
-        if (!userModel.getPassHash().equals(pass)) {
+        if (!userModel.getPassHash().equals(codingPass(pass))) {
             return false;
         }
 
         return true;
+    }
+
+    public UserModel getUserByLogin(String login) {
+        return new UserDao().findByLogin(login);
     }
 
     public void changeUserData(UserModel userModel, String pass, String email) {

@@ -3,6 +3,7 @@ package am.lavshuka.lad.service.product;
 import am.lavshuka.lad.dao.product.BuySellActionProductDao;
 import am.lavshuka.lad.model.product.BuySellActionProduct;
 import am.lavshuka.lad.model.product.ProductModel;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * Created by David on 5/5/2018.
  */
 
+@Service
 public class BuySellActionProductService {
 
     public void buyProduct(ProductModel productModel, int count, java.util.Date date) {

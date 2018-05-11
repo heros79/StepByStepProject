@@ -3,6 +3,7 @@ package am.lavshuka.lad.model.product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "totalproducts")
+@Component
 public class ProductsByCount implements Serializable {
 
     @Column(name = "product_id")
