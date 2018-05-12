@@ -18,8 +18,6 @@ CREATE TABLE prodcategory (
 )
   ENGINE = InnoDB;
 
-INSERT INTO prodcategory (categoryname) VALUE ('household');
-
 /* Cretate ProductType table */
 CREATE TABLE prodtype (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -30,16 +28,12 @@ CREATE TABLE prodtype (
 )
   ENGINE = InnoDB;
 
-INSERT INTO prodtype VALUE ((SELECT id FROM prodcategory WHERE categoryname = 'household'), 'soap');
-
 /* Create ProductBrand table */
 CREATE TABLE prodbrand (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   brandname VARCHAR(100) NOT NULL UNIQUE
 )
   ENGINE = InnoDB;
-
-INSERT INTO prodbrand (brandname) VALUE ('IKEA');
 
 /* Create Products table */
 CREATE TABLE products (

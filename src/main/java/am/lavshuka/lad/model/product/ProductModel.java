@@ -3,6 +3,8 @@ package am.lavshuka.lad.model.product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -52,7 +54,8 @@ public class ProductModel implements Serializable {
     @Column(name = "filepath")
     private String productImageFilePath;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productModel")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productModel")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<BuySellActionProduct> buySellActionProductList;
 
     @Override

@@ -33,7 +33,7 @@ public class AbstractMainProduct<T> {
 
     public T find(String sql, String searchParam) {
         Session session = getSessionFactory().openSession();
-        Query<T> query = session.createQuery(sql + " = :name");
+        Query query = session.createQuery(sql + " = :name");
         query.setParameter("name", searchParam);
         T t = (T) query.uniqueResult();
         session.close();

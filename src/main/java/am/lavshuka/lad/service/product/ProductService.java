@@ -59,4 +59,11 @@ public class ProductService {
     public void removeProduct(ProductModel productModel) {
         new ProductDao().remove(productModel);
     }
+
+    private String setVendorCode(ProductModel productModel) {
+        return new String(String.valueOf(productModel.getProductBrand().getProductBrandName().charAt(0))
+                .concat("-").concat(String.valueOf(productModel.getProductType().getProductTypeName().charAt(0)))
+                .concat("-").concat(String.valueOf(productModel.getProductBrand().getProductBrandName().charAt(0)))
+                .concat(String.valueOf("000001")));
+    }
 }

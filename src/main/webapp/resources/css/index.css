@@ -1,0 +1,26 @@
+#header{
+    background: lightsalmon;
+    width: auto;
+    height: 75px;
+}
+#login{
+    background:lightsalmon;
+    height: 50px;
+}
+#login-form{
+    display: inline-block;
+    width: auto;
+    margin-left: 860px;
+    margin-top: 12px;
+}
+#registration{
+    background:darksalmon;
+    height: 20px;
+    margin-left: 1124px;
+}
+.center {
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+}

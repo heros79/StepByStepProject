@@ -14,7 +14,7 @@
 <body>
 <form action="/search" method="get" name="search">
     <div id="choseProductCategory">
-        <select>
+        <select name="category">
             <option value="--||--">
                 --||--
             </option>
@@ -26,7 +26,7 @@
         </select>
     </div>
     <div id="choseProductType">
-        <select>
+        <select name="type">
             <option value="--||--">
                 --||--
             </option>
@@ -38,7 +38,7 @@
         </select>
     </div>
     <div id="choseProductBrand">
-        <select>
+        <select name="brand">
             <option value="--||--">
                 --||--
             </option>

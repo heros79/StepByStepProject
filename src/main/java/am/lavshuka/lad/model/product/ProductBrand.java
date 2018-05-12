@@ -3,6 +3,8 @@ package am.lavshuka.lad.model.product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -28,6 +30,7 @@ public class ProductBrand implements Serializable {
     @Column(name = "brandname")
     private String productBrandName;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productBrand")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productBrand")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<ProductModel> productModelSet;
 }
