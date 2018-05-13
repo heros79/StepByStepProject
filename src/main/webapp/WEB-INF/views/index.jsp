@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="../../resources/css/index.css">
@@ -17,12 +18,12 @@
 <div id="header">
     <div id="login" class="header-class">
         <form action="/login" method="post" name="logining" id="login-form">
-            Login <input type="text" name="loginfild" size="10"/>
-            Password <input type="password" name="passfild" size="10">
+            Login <input type="text" name="username" size="10"/>
+            Password <input type="password" name="password" size="10">
             <input type="submit" value="LOGIN"/> </br>
         </form>
         <div id="registration" class="header-class">
-            <a href="register"> REGISTRATION </a>
+            <a href="${contextPath}/register"> REGISTRATION </a>
         </div>
     </div>
 </div>

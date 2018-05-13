@@ -9,14 +9,24 @@
 
     <http auto-config="true">
 
-        <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
         <intercept-url pattern="/home" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 
-<!--        <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
+        <form-login login-page="/index" authentication-failure-url="/login?error"
                     username-parameter="username" password-parameter="password"/>
 
-        <logout logout-success-url="/login?logout" delete-cookies="true"/>-->
+        <logout logout-success-url="/login?logout" delete-cookies="true"/>
     </http>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailsServiceImpl">
+
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="userDetailsServiceImpl"
+                class="am.lavshuka.lad.service.user.UserDetailServiceImpl"></beans:bean>
+
 
 </beans:beans>

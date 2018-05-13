@@ -43,19 +43,18 @@ public class MainController {
     @Autowired
     private ProductBrandService productBrandService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("index");
         List<ProductModel> productList = productService.findAllProducts();
         modelAndView.addObject("products", productList);
         return modelAndView;
     }
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam(value = "loginfild") String login,
-                              @RequestParam(value = "passfild") String pass) {
-        ModelAndView modelAndView = null;
-        if (new UserService().loginUser(login, pass)) {
+    public ModelAndView login(@RequestParam(value = "username") String login,
+                              @RequestParam(value = "password") String pass) {
+        ModelAndView modelAndView = new ModelAndView("/login");
+/*        if (new UserService().loginUser(login, pass)) {
             userModel = new UserService().getUserByLogin(login);
             if (userModel.getRole() == UserModel.Role.ROLE_USER) {
                 modelAndView = new ModelAndView("home");
@@ -71,7 +70,7 @@ public class MainController {
         } else {
             modelAndView =  new ModelAndView("redirect:/");
             return modelAndView;
-        }
+        }*/
         return modelAndView;
     }
 
