@@ -9,11 +9,9 @@
 
     <http auto-config="true">
 
-        <intercept-url pattern="/" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
-        <intercept-url pattern="/index" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
-        <intercept-url pattern="/login" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+        <intercept-url pattern="/index" access="hasRole('ROLE_USER')"/>
 
-        <form-login login-page="/loginPage" login-processing-url="/login"
+        <form-login login-page="/loginPage․jsp" login-processing-url="/login"
                     username-parameter="username" password-parameter="password"
                     default-target-url="/index"
                     authentication-failure-url="/login?error"/>
@@ -23,6 +21,7 @@
 
     <authentication-manager> <!--alias="authenticationManager"-->
         <authentication-provider> <!--user-service-ref="userDetailsServiceImpl"-->
+            <password-encoder ref="passwordEncoder"></password-encoder>
             <user-service>
                 <user name="admin" password="admin" authorities="ROLE_USER" />
             </user-service>
@@ -31,6 +30,6 @@
 
 <!--    <beans:bean id="userDetailsServiceImpl"
                 class="am.lavshuka.lad.service.user.UserDetailServiceImpl"></beans:bean>-->
-
+    <beans:bean id ="passwordEncoder" class = "org.springframework.security.crypto.password.NoOpPasswordEncoder" factory-method = "getInstance" />
 
 </beans:beans>

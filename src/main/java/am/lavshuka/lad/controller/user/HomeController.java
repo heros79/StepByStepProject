@@ -59,7 +59,7 @@ public class HomeController {
             modelAndView.addObject("products", list);
             return modelAndView;
         } else {
-            return modelAndView = new ModelAndView("redirect:/home");
+            return modelAndView = new ModelAndView("redirect:/index");
         }
     }
 }
