@@ -15,6 +15,18 @@
 </head>
 <body>
 
+<div id="header">
+    <div id="login" class="header-class">
+        <form action="/login" method="post" name="logining" id="login-form">
+            Login <input type="text" name="username" size="10"/>
+            Password <input type="password" name="password" size="10">
+            <input type="submit" value="LOGIN"/> </br>
+        </form>
+        <div id="registration" class="header-class">
+            <a href="${contextPath}/register"> REGISTRATION </a>
+        </div>
+    </div>
+</div>
 
 <div id="prodview">
     <c:forEach items="${products}" var="item">

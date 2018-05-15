@@ -10,23 +10,27 @@
     <http auto-config="true">
 
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
-        <intercept-url pattern="/home" access="hasRole('ROLE_USER')"/>
-        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/index" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
+        <intercept-url pattern="/login" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
 
-        <form-login login-page="/index" authentication-failure-url="/login?error"
-                    username-parameter="username" password-parameter="password"/>
+        <form-login login-page="/loginPage" login-processing-url="/login"
+                    username-parameter="username" password-parameter="password"
+                    default-target-url="/index"
+                    authentication-failure-url="/login?error"/>
 
         <logout logout-success-url="/login?logout" delete-cookies="true"/>
     </http>
 
-    <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="userDetailsServiceImpl">
-
+    <authentication-manager> <!--alias="authenticationManager"-->
+        <authentication-provider> <!--user-service-ref="userDetailsServiceImpl"-->
+            <user-service>
+                <user name="admin" password="admin" authorities="ROLE_USER" />
+            </user-service>
         </authentication-provider>
     </authentication-manager>
 
-    <beans:bean id="userDetailsServiceImpl"
-                class="am.lavshuka.lad.service.user.UserDetailServiceImpl"></beans:bean>
+<!--    <beans:bean id="userDetailsServiceImpl"
+                class="am.lavshuka.lad.service.user.UserDetailServiceImpl"></beans:bean>-->
 
 
 </beans:beans>

@@ -21,9 +21,8 @@ import java.util.List;
 /**
  * Created by David on 5/11/2018.
  */
-//@Controller("/search")
+@Controller("/search")
 public class HomeController {
-/*
     @Autowired
     private ProductService productService;
 
@@ -62,5 +61,5 @@ public class HomeController {
         } else {
             return modelAndView = new ModelAndView("redirect:/home");
         }
-    }*/
+    }
 }

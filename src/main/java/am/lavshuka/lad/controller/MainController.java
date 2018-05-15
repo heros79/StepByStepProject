@@ -19,13 +19,14 @@ import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
  * Created by David on 5/9/2018.
  */
 
-@Controller("/")
+@Controller
 public class MainController {
 
     @Autowired
@@ -33,6 +34,9 @@ public class MainController {
 
     @Autowired
     private UserModel userModel;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ProductCategoryService productCategoryService;
@@ -43,36 +47,34 @@ public class MainController {
     @Autowired
     private ProductBrandService productBrandService;
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/index")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("index");
-        List<ProductModel> productList = productService.findAllProducts();
-        modelAndView.addObject("products", productList);
         return modelAndView;
     }
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam(value = "username") String login,
-                              @RequestParam(value = "password") String pass) {
-        ModelAndView modelAndView = new ModelAndView("/login");
-/*        if (new UserService().loginUser(login, pass)) {
-            userModel = new UserService().getUserByLogin(login);
-            if (userModel.getRole() == UserModel.Role.ROLE_USER) {
-                modelAndView = new ModelAndView("home");
-                List<ProductCategory> categoryList = productCategoryService.findAllProductCategory();
-                modelAndView.addObject("category", categoryList);
-                List<ProductType> typeList = productTypeService.findAllProductType();
-                modelAndView.addObject("type", typeList);
-                List<ProductBrand> brandList = productBrandService.findAllProductBrand();
-                modelAndView.addObject("brand", brandList);
-            } else if (userModel.getRole() == UserModel.Role.ROLE_ADMIN) {
-                modelAndView = new ModelAndView("admin");
-            }
-        } else {
-            modelAndView =  new ModelAndView("redirect:/");
-            return modelAndView;
-        }*/
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView("loginPage");
+
         return modelAndView;
     }
+
+    @RequestMapping(value = "/loginPage")
+    public ModelAndView loginPage() {
+        return new ModelAndView("loginPage");
+    }
+/*    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ModelAndView loginG(@RequestParam(value = "username") String login,
+                               @RequestParam(value = "password") String pass) {
+        ModelAndView modelAndView = new ModelAndView("index");
+        if (userService.loginUser(login, pass)) {
+            userModel = userService.getUserByLogin(login);
+        }
+
+        modelAndView.addObject(userModel);
+
+        return modelAndView;
+    }*/
 
     @RequestMapping(value = "/register")
     @RequestScope
@@ -81,7 +83,7 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/reg", method = RequestMethod.POST)
+/*    @RequestMapping(value = "/reg", method = RequestMethod.POST)
     @SessionScope
     public ModelAndView register(@RequestParam(value = "login") String login,
                                  @RequestParam(value = "firstName") String firstName,
@@ -105,6 +107,18 @@ public class MainController {
         modelAndView = new ModelAndView("redirect:/");
 
         return modelAndView;
+    }*/
+
+    public ModelAndView admin() {
+        return new ModelAndView("admin");
     }
 
 }
+/*        List<ProductModel> productList = productService.findAllProducts();
+        modelAndView.addObject("products", productList);
+        List<ProductCategory> categoryList = productCategoryService.findAllProductCategory();
+        modelAndView.addObject("category", categoryList);
+        List<ProductType> typeList = productTypeService.findAllProductType();
+        modelAndView.addObject("type", typeList);
+        List<ProductBrand> brandList = productBrandService.findAllProductBrand();
+        modelAndView.addObject("brand", brandList);*/
