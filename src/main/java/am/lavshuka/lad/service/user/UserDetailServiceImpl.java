@@ -19,8 +19,8 @@ import java.util.Set;
  * Created by David on 5/14/2018.
  */
 
-public class UserDetailServiceImpl /*implements UserDetailsService*/ {
-/*
+public class UserDetailServiceImpl implements UserDetailsService {
+
     @Autowired
     private UserDao userDao;
 
@@ -32,8 +32,9 @@ public class UserDetailServiceImpl /*implements UserDetailsService*/ {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         Set<UserModel.Role> roles = EnumSet.allOf(UserModel.Role.class);
         for (UserModel.Role role : roles) {
+            if (user.getRole().equals(role))
             grantedAuthorities.add(new SimpleGrantedAuthority(role.name()));
         }
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassHash(), grantedAuthorities);
-    }*/
+    }
 }

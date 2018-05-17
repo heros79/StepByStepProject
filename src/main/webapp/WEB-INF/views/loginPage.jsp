@@ -32,59 +32,9 @@
 </div>
 
 
-<div>
-<%--    <form action="/search" method="get" name="search">--%>
-        <div id="choseProductCategory">
-            <select name="category" onchange="this.form.submit()">
-                <option value="--||--">
-                    --||--
-                </option>
-                <c:forEach items="${categoryList}" var="item">
-                    <option value="${item.productCategoryName}">
-                            ${item.productCategoryName}
-                    </option>
-                </c:forEach>
-            </select>
-        </div>
-        <div id="choseProductType">
-            <select name="type">
-                <option value="--||--">
-                    --||--
-                </option>
-                <c:forEach items="${typeList}" var="item">
-                    <option value="${item.productTypeName}">
-                            ${item.productTypeName}
-                    </option>
-                </c:forEach>
-            </select>
-        </div>
-        <div id="choseProductBrand">
-            <select name="brand">
-                <option value="--||--">
-                    --||--
-                </option>
-                <c:forEach items="${brandList}" var="item">
-                    <option value="${item.productBrandName}">
-                            ${item.productBrandName}
-                    </option>
-                </c:forEach>
-            </select>
-        </div>
-        <input type="submit" value="SEARCH">
-    <%--</form>--%>
-</div>
 
-<div id="prodview">
-    <c:forEach items="${products}" var="item">
-        <div style="width: 600px; margin-top: 50px;" class="center">
-            <img src="${item.productImageFilePath}" style="width: 100px; height: 100px; float: left;"/>
-            <h4 style="float: left;">${item.productName}</h4>
-            <p style="float: right;">${item.price}AMD</p>
-            <div style="clear: both; "></div>
-        </div>
-        <div style="clear: both; "></div>
-    </c:forEach>
-</div>
+
+
 
 
 </body>
