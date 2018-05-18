@@ -6,10 +6,13 @@ import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.product.ProductsByCount;
 import am.lavshuka.lad.model.user.UserModel;
 import am.lavshuka.lad.service.product.ProductByCountService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.List;
+
 
 /**
  * Created by David on 5/4/2018.
@@ -129,5 +132,17 @@ public class UserService {
         builder.reverse();
         String rs = new String(builder);
         return rs;
+    }
+
+    @Transactional(readOnly = true)
+    public String getAuthenticatedUserData() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String principalName = null;
+        if (principal instanceof UserDetails) {
+            principalName = ((UserDetails)principal).getUsername();
+        } else {
+            principalName = principal.toString();
+        }
+        return principalName;
     }
 }

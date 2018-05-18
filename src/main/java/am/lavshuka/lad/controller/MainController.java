@@ -8,13 +8,13 @@ import am.lavshuka.lad.service.product.ProductBrandService;
 import am.lavshuka.lad.service.product.ProductCategoryService;
 import am.lavshuka.lad.service.product.ProductService;
 import am.lavshuka.lad.service.product.ProductTypeService;
+import am.lavshuka.lad.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +37,8 @@ public class MainController {
     @Autowired
     private ProductBrandService productBrandService;
 
-
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/")
     public ModelAndView main() {
@@ -56,67 +57,10 @@ public class MainController {
         modelAndView.addObject("typeList", typeList);
         List<ProductBrand> brandList = productBrandService.findAllProductBrand();
         modelAndView.addObject("brandList", brandList);
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/searchByCategory", method = RequestMethod.POST)
-    public ModelAndView searchByCategory(@RequestParam(value = "categoryChoice") String category) {
-        ModelAndView modelAndView = new ModelAndView("home");
-        List<ProductModel> productsList = null;
-        List<ProductType> typesList = null;
-        List<ProductCategory> categoryList = productCategoryService.findAllProductCategory();
-        List<ProductBrand> brandList = productBrandService.findAllProductBrand();
-        if (!category.equals("--||--")) {
-            ProductCategory productCategory = productCategoryService.findProductCategoryByName(category);
-            productsList = productService.findProductsByCategory(productCategory);
-            typesList = productTypeService.findProductTypeByCategory(productCategory);
+        String login = userService.getAuthenticatedUserData();
+        if ("anonymousUser" != login) {
+            modelAndView.addObject("money", userService.getUserByLogin(login).getMoney());
         }
-        modelAndView.addObject("categoryList", categoryList);
-        modelAndView.addObject("typeList", typesList);
-        modelAndView.addObject("brandList", brandList);
-        modelAndView.addObject("products", productsList);
-
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/searchByType", method = RequestMethod.POST)
-    public ModelAndView searchByType(@RequestParam(value = "typeChoice") String type) {
-        ModelAndView modelAndView = new ModelAndView("home");
-        List<ProductCategory> categoryList = productCategoryService.findAllProductCategory();
-        List<ProductType> typeList = productTypeService.findAllProductType();
-        List<ProductBrand> brandList = productBrandService.findAllProductBrand();
-        List<ProductModel> productsList = null;
-
-        if (!type.equals("--||--")) {
-            ProductType productType = productTypeService.findProductTypeByName(type);
-            productsList = productService.findProductsByType(productType);
-        }
-
-        modelAndView.addObject("categoryList", categoryList);
-        modelAndView.addObject("typeList", typeList);
-        modelAndView.addObject("brandList", brandList);
-        modelAndView.addObject("products", productsList);
-
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "searchByBrand", method = RequestMethod.POST)
-    public ModelAndView searchByBrand(@RequestParam(value = "brandChoice") String brand) {
-        ModelAndView modelAndView = new ModelAndView("home");
-        List<ProductCategory> categoryList = productCategoryService.findAllProductCategory();
-        List<ProductType> typeList = productTypeService.findAllProductType();
-        List<ProductBrand> brandList = productBrandService.findAllProductBrand();
-        List<ProductModel> productsList = null;
-
-        if (!brand.equals("--||--")) {
-            ProductBrand productBrand = productBrandService.findProductBrandByName(brand);
-            productsList = productService.findProductsByBrand(productBrand);
-        }
-
-        modelAndView.addObject("categoryList", categoryList);
-        modelAndView.addObject("typeList", typeList);
-        modelAndView.addObject("brandList", brandList);
-        modelAndView.addObject("products", productsList);
 
         return modelAndView;
     }
@@ -133,16 +77,13 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/register")
-    @RequestScope
-    public ModelAndView regpage() {
-        ModelAndView modelAndView = new ModelAndView("register");
-        return modelAndView;
-    }
-
     @RequestMapping("/admin")
     public ModelAndView admin() {
         return new ModelAndView("admin");
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView logout(String logout) {
+        return new ModelAndView("redirect:/index");
+    }
 }

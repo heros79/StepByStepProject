@@ -12,14 +12,16 @@
 </head>
 <body>
 
-<form action="/reg" method="post" name="registration">
+<form action="/register" method="post" name="registration">
     Login <input type="text" name="login"> </br>
     First Name <input type="text" name="firstName"/> </br>
     Last Name <input type="text" name="lastName"/> </br>
     E-mail <input type="email" name="email"> </br>
-    Password <input type="password" name="pass"> </br>
-    Confirm Password <input type="password" name="confirmPass"> </br>
+    Password <input type="password" name="password"> </br>
+    Confirm Password <input type="password" name="confirmPassword"> </br>
     <input type="submit" value="Register"> </br>
+    ${massage}
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
 
 </body>
