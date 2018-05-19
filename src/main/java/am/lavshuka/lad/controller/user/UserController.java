@@ -54,6 +54,11 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public ModelAndView register() {
+        return new ModelAndView("register");
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(@RequestParam(value = "login") String login,
                                  @RequestParam(value = "firstName") String firstName,

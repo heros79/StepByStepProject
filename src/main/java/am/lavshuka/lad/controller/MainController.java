@@ -77,11 +77,6 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping("/admin")
-    public ModelAndView admin() {
-        return new ModelAndView("admin");
-    }
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView logout(String logout) {
         return new ModelAndView("redirect:/index");

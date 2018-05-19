@@ -11,6 +11,7 @@
 
         <intercept-url pattern="/" access="permitAll"/>
         <intercept-url pattern="/index" access="permitAll"/>
+        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 <!--        <intercept-url pattern="/home" access="isAnonymous"/>-->
 
         <form-login login-page="/loginPage" login-processing-url="/login"
