@@ -39,9 +39,14 @@ public class UserController {
                                        @RequestParam(value = "newEmail") String email,
                                        @RequestParam(value = "newPassword") String newPassword,
                                        @RequestParam(value = "confirmNewPassword") String confirmPassword) {
+
         ModelAndView modelAndView = new ModelAndView("changeUserData");
 
         userModel = userService.getUserByLogin(username);
+
+        if (oldPassword.equals("") || (email.equals("") && newPassword.equals(""))) {
+            return modelAndView;
+        }
 
         if (!oldPassword.equals(userModel.getPassHash())) {
             return modelAndView;
@@ -49,7 +54,13 @@ public class UserController {
             return modelAndView;
         }
 
-        userService.changeUserData(userModel, newPassword, email);
+        if (email.equals("")) {
+            userService.changeUserData(userModel, newPassword, null);
+        } else if (newPassword.equals("")) {
+            userService.changeUserData(userModel, null, email);
+        } else {
+            userService.changeUserData(userModel, newPassword, email);
+        }
         modelAndView = new ModelAndView("redirect:/index");
         return modelAndView;
     }
@@ -67,15 +78,13 @@ public class UserController {
                                  @RequestParam(value = "password") String password,
                                  @RequestParam(value = "confirmPassword") String confirmPassword) {
 
-        ModelAndView modelAndView;
+        ModelAndView modelAndView = new ModelAndView("register");;
 
         if (login.equals("") || email.equals("") || password.equals("") || confirmPassword.equals("") ||
                 firstName.equals("") || lastName.equals("")) {
-            modelAndView = new ModelAndView("register");
             modelAndView.addObject("massage", "You need write all data");
             return modelAndView;
         } else if (!password.equals(confirmPassword)) {
-            modelAndView = new ModelAndView("register");
             modelAndView.addObject("massage", "Input Password and ConfirmPassword again");
             return modelAndView;
         }
@@ -89,7 +98,6 @@ public class UserController {
         try {
             userService.registerUser(userModel);
         } catch (IllegalArgumentException e) {
-            modelAndView = new ModelAndView("register");
             modelAndView.addObject("massage", "email all login is busy");
             return modelAndView;
         }
@@ -97,7 +105,7 @@ public class UserController {
         return new ModelAndView("redirect:/index");
     }
 
-    @RequestMapping(value = "changeaccount", method = RequestMethod.GET)
+    @RequestMapping(value = "changeaccount", method = RequestMethod.POST)
     public ModelAndView getChangePage() {
         return new ModelAndView("changeUserData");
     }

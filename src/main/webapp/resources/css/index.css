@@ -27,17 +27,62 @@
 .item {
     display: inline-block;
     vertical-align: top;
-    width: 120px;
+    width: 100px;
     min-height: 120px;
-    margin-right: 20px;
-    margin-bottom: 20px;
+    max-height: 190px;
+    margin-right: 25px;
+    margin-bottom: 25px;
     border: 2px solid #2c3e50;
 }
 
-.item p {
-    font-size: 12px;
-    vertical-align: text-bottom;
+#f_product{
+    vertical-align: top;
+    width: 120px;
+    height: 120px;
+    horiz-align: center;
+    margin: auto;
+}
+
+.number{
+    display: inline-flex;
+    width: 28px;
+    margin: 8px;
+}
+
+.minus, .plus {
+    width: 17px;
+    height: 17px;
+    background: #f2f2f2;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.minus{
+    padding: 0px 5px 0px 5px;
+}
+.plus{
+    padding: 0px 5px 0px 4px;
+}
+
+
+.number input {
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0 2px;
+}
+
+.number span {
+    cursor: pointer;
+}
+
+#n_product, #p_product {
+    width: 120px;
+    height: 15px;
+    font-size: 14px;
     text-align: center;
+    color: red;
+    margin-top: auto;
 }
 
 #choice{

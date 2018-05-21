@@ -19,8 +19,9 @@ ${principal.username}
 First Name ${firstName};
 Last Name  ${lastName};
 E-mail     ${email};
-<form action="/changeaccount" method="get">
+<form action="/changeaccount" method="post">
     <input type="submit" value="Change Data"/>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
 
 

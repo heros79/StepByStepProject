@@ -14,11 +14,11 @@ import java.util.List;
 @Service
 public class BuySellActionProductService {
 
-    public void buyProduct(ProductModel productModel, int count, java.util.Date date) {
+    public void buyProduct(ProductModel productModel, int count, java.util.Date buyDate) {
         BuySellActionProduct product = new BuySellActionProduct();
         product.setProductModel(productModel);
         product.setCount(count);
-        product.setProductBuyDate(date);
+        product.setProductBuyDate(buyDate);
 
         new BuySellActionProductDao().add(product);
     }

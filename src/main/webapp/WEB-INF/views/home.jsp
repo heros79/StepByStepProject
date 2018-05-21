@@ -13,6 +13,7 @@
 <html>
 <head>
     <script src="../../resources/js/jquery-3.3.1.min.js"></script>
+
     <script type="text/javascript">
         function openImageWindow(src) {
             var image = new Image();
@@ -21,55 +22,41 @@
             var height = image.height;
             window.open(src, "Image", "width=" + width + ",height=" + height);
         }
+        /*        function buy() {
+         var count = document.getElementById('input').value;
+         var corf = document.getElementById('corfCount');
+         if (count > 1) {
+         corf.value = count;
+         }
+         }*/
     </script>
 
     <script type="text/javascript">
-        function minus() {
+        $(document).ready(function () {
             $('.minus').click(function () {
-                var input = this.parent().find('input');
-                var count = parseInt(input.val()) - 1;
+                var $input = $(this).parent().find('input');
+                var count = parseInt($input.val()) - 1;
                 count = count < 1 ? 1 : count;
-                input.val(count);
-                input.changedTouches();
+                $input.val(count);
+                $input.change();
                 return false;
             });
-        }
-
-        function plus() {
             $('.plus').click(function () {
-                var input = this.parent().find('input');
-                input.val(parseInt(input.val()) + 1);
-                input.changedTouches();
+                var $input = $(this).parent().find('input');
+                $input.val(parseInt($input.val()) + 1);
+                $input.change();
                 return false;
-            })
-        }
+            });
+            /*            $('#buyCount').click(function () {
+             var $input = $(this).parent().find('input');
+             var $corf = $(this).parent().find('#corfCount');
+             $corf.val($input.val());
+             $corf.change();
+             return false;
+             })*/
+        });
     </script>
     <link rel="stylesheet" type="text/css" href="../../resources/css/index.css">
-    <style type="text/css">
-        span {
-            cursor: pointer;
-        }
-
-        .number {
-            margin: 100px 30%;
-        }
-
-        .minus, .plus {
-            width: 10px;
-            height: 10px;
-            background: #f2f2f2;
-            border-radius: 4px;
-            padding: 3px 5px 3px 5px;
-            border: 1px solid #ddd;
-        }
-
-        input {
-            height: 24px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 0 2px;
-        }
-    </style>
     <title>LavShuka</title>
 </head>
 <body>
@@ -87,7 +74,7 @@
     <sec:authorize access="hasRole('ROLE_USER')">
         <sec:authentication var="principal" property="principal"/>
         ${principal.username} <br>
-        Your balanse ${money} AMD
+        Your balanse ${money} AMD || YourCorf <input type="number" id="corfCount" size="5" value="0" readonly/>
         <form action="/account/${principal.username}" method="post" name="userInfo">
             <input type="submit" name="goToInfo" value="Your account"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -112,7 +99,8 @@
                 <form id="logoutForm" method="POST" action="${contextPath}/logout">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
-                <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+                <h2>Welcome ${pageContext.request.userPrincipal.name} | <a
+                        onclick="document.forms['logoutForm'].submit()">Logout</a>
                 </h2>
                 <br>
             </c:if>
@@ -182,22 +170,36 @@
 <div class="container" style="visibility: hidden">
     <div class="catalog" style="visibility: hidden">
         <c:forEach items="${products}" var="item">
-            <div>
-                <div class="item" style="background: url('${item.productImageFilePath}'); background-size: auto 100%;
+            <div class="item">
+                <div id="f_product" style="background: url('${item.productImageFilePath}'); background-size: auto 100%;
                         background-repeat: no-repeat; visibility: visible;"
                      onclick="openImageWindow('${item.productImageFilePath}')">
+                </div>
+                <div id="n_product" style="visibility: visible">
                     <p>${item.productName}</p>
+                </div>
+                <div id="p_product" style="visibility: visible;">
                     <p>${item.price}AMD</p>
                 </div>
                 <div class="number"
                      style="position: inherit; vertical-align: top; text-align: center; visibility: visible">
-                    <span class="minus" onclick="minus()">-</span>
-                    <input type="text" value="1" size="5" name="SelectProductCount" onchange="alert(this.value)"/>
-                    <span class="plus" onclick="plus()">+</span>
+                    <span class="minus">-</span>
+                    <input type="text" value="1" min="1" max="" size="5" name="SelectProductCount" id="input"/>
+                    <span class="plus">+</span>
                 </div>
-                <form action="/addProductToCorf">
-                    <input type="submit" value="BUY">
-                </form>
+                <sec:authorize access="hasRole('ROLE_USER')">
+                    <script type="text/javascript">
+                        function buy() {
+                            var count = document.getElementById('input').value;
+                            var corf = document.getElementById('corfCount');
+                            if (count > 1) {
+                                corf.value = count;
+                            }
+                        }
+                    </script>
+                    <input type="button" id="buyCount" value="BUY"
+                           style="visibility: visible; margin: 39px; margin-top: auto" onclick="buy()">
+                </sec:authorize>
             </div>
         </c:forEach>
     </div>

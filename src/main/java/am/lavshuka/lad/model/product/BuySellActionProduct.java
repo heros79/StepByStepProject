@@ -22,7 +22,7 @@ import java.util.Date;
 public class BuySellActionProduct implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch=FetchType.LAZY)

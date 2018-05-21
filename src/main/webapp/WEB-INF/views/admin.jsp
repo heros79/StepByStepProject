@@ -21,7 +21,7 @@
 </form>
 <br>
 
-<form action="/addCategory" method="get">
+<form action="/addCategory" method="post">
     Input new Category <input type="text" name="addCategory"><br>
     <input type="submit" value="add Category">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -90,12 +90,29 @@
     </c:forEach>
 </select><br>
 
-    Product Name <input type="text" name="productName"> Price <input type="number" name="productPrice" min="0" step=".01"><br>
+    Product Name <input type="text" name="productName"> Price <input type="number" name="productPrice" min="0"
+                                                                     step=".01"><br>
     Description <input type="text" name="description" size="75"><br>
     VendorCode <input type="text" name="vendorCode"> FilePath <input type="text" name="filePath"><br>
     <input type="submit" value="Add Product">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
     ${productMassage}
+</form>
+
+<form action="/addProductCount" method="post">
+    Select Product <select name="productChoice">
+    <option value="--||--">
+        --||--
+    </option>
+    <c:forEach items="${productList}" var="item">
+        <option value="${item.vendorCode}">
+                ${item.productName} &nbsp ${item.vendorCode}
+        </option>
+    </c:forEach>
+    </select><br>
+    Select count<input type="number" min="0" name="productCount">
+    <input type="submit" value="ADD">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
 </body>
 </html>
