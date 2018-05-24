@@ -21,4 +21,14 @@ public class ProductByCountService {
     public List<ProductsByCount> getAllProductsWithCount () {
         return new ProductsByCountDao().findAll(ProductsByCount.class);
     }
+
+    public Integer findProductCount (ProductModel productModel) {
+        List<ProductsByCount> list = getAllProductsWithCount();
+        for (ProductsByCount p: list) {
+            if (p.getProductId() == productModel.getId()) {
+                return p.getCount();
+            }
+        }
+        return null;
+    }
 }

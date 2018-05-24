@@ -30,5 +30,5 @@ public class ProductsByCount implements Serializable {
     private String vendorCode;
 
     @Column(name = "count")
-    private Double count;
+    private Integer count;
 }

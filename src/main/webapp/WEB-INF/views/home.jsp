@@ -22,13 +22,23 @@
             var height = image.height;
             window.open(src, "Image", "width=" + width + ",height=" + height);
         }
-        /*        function buy() {
-         var count = document.getElementById('input').value;
-         var corf = document.getElementById('corfCount');
-         if (count > 1) {
-         corf.value = count;
-         }
-         }*/
+
+        function buy(cidr) {
+            var count = document.getElementById(cidr).value;
+            var corf = document.getElementById('corfCount');
+            corf.value = count;
+        }
+
+        function checkSum(price) {
+            var count = parseInt(document.getElementById('corfCount').value);
+            var money = '${money}';
+            var sum = count * price;
+            if (sum > money) {
+                document.getElementById('corfCount').value = 0;
+                alert('You not have money');
+            }
+        }
+
     </script>
 
     <script type="text/javascript">
@@ -47,13 +57,6 @@
                 $input.change();
                 return false;
             });
-            /*            $('#buyCount').click(function () {
-             var $input = $(this).parent().find('input');
-             var $corf = $(this).parent().find('#corfCount');
-             $corf.val($input.val());
-             $corf.change();
-             return false;
-             })*/
         });
     </script>
     <link rel="stylesheet" type="text/css" href="../../resources/css/index.css">
@@ -184,21 +187,13 @@
                 <div class="number"
                      style="position: inherit; vertical-align: top; text-align: center; visibility: visible">
                     <span class="minus">-</span>
-                    <input type="text" value="1" min="1" max="" size="5" name="SelectProductCount" id="input"/>
+                    <input type="text" value="1" min="1" max="" size="5" name="SelectProductCount"
+                           id="${item.vendorCode}" class="count"/>
                     <span class="plus">+</span>
                 </div>
                 <sec:authorize access="hasRole('ROLE_USER')">
-                    <script type="text/javascript">
-                        function buy() {
-                            var count = document.getElementById('input').value;
-                            var corf = document.getElementById('corfCount');
-                            if (count > 1) {
-                                corf.value = count;
-                            }
-                        }
-                    </script>
                     <input type="button" id="buyCount" value="BUY"
-                           style="visibility: visible; margin: 39px; margin-top: auto" onclick="buy()">
+                           style="visibility: visible; margin: 39px; margin-top: auto" onclick="buy('${item.vendorCode}'), checkSum('${item.price}') ">
                 </sec:authorize>
             </div>
         </c:forEach>
