@@ -3,13 +3,7 @@ package am.lavshuka.lad.service.user;
 import am.lavshuka.lad.dao.user.UserDao;
 import am.lavshuka.lad.model.user.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -20,9 +14,9 @@ import java.util.Set;
  * Created by David on 5/14/2018.
  */
 
-public class UserDetailServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl /*implements UserDetailsService*/ {
 
-    @Autowired
+/*    @Autowired
     private UserDao userDao;
 
     @Override
@@ -37,5 +31,5 @@ public class UserDetailServiceImpl implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.name()));
         }
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassHash(), grantedAuthorities);
-    }
+    }*/
 }

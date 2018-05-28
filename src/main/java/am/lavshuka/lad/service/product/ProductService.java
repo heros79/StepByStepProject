@@ -1,21 +1,32 @@
 package am.lavshuka.lad.service.product;
 
 import am.lavshuka.lad.dao.product.ProductDao;
+import am.lavshuka.lad.dto.ProductDTO;
 import am.lavshuka.lad.model.product.ProductBrand;
 import am.lavshuka.lad.model.product.ProductCategory;
 import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.product.ProductType;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by David on 5/5/2018.
+ * Created by @Author David Karchikyan
+ * this class present Product actions service
+ * and uses {@link am.lavshuka.lad.model.product.ProductModel},
+ * {@link am.lavshuka.lad.dao.product.ProductDao},
+ * {@link am.lavshuka.lad.dto.ProductDTO} classes
  */
 
 @Service
 public class ProductService {
 
+    /**
+     * add Product object into DB
+     *
+     * @param productModel
+     */
     public void addProduct(ProductModel productModel) {
         new ProductDao().add(productModel);
     }
@@ -24,12 +35,45 @@ public class ProductService {
         return new ProductDao().findByVendorCode(vendorCode);
     }
 
-    public List<ProductModel> findAllProducts() {
-        return new ProductDao().findAll(ProductModel.class);
+    /**
+     * read all Product from DB and
+     *
+     * @return {@link am.lavshuka.lad.dto.ProductDTO} list
+     */
+    public List<ProductDTO> findAllProducts() {
+        List<ProductDTO> list = new ArrayList<>();
+        List<ProductModel> productsList = new ProductDao().findAll(ProductModel.class);
+
+        for (ProductModel b : productsList) {
+            list.add(new ProductDTO()
+                    .setDtoProductID(b.getId())
+                    .setDtoProductName(b.getProductName())
+                    .setDtoProductVendorCode(b.getVendorCode())
+                    .setDtoProductDescription(b.getDescription())
+                    .setDtoProductImageFilePath(b.getProductImageFilePath())
+                    .setDtoProductPrice(b.getPrice()));
+        }
+        return list;
     }
 
-    public List<ProductModel> findProductsByCategory(ProductCategory productCategory) {
-        return productCategory.getProductModelSet();
+    /**
+     * Read all Product from DB where Category @param productCategory
+     * and @return {@link am.lavshuka.lad.dto.ProductDTO} list
+     */
+    public List<ProductDTO> findProductsByCategory(ProductCategory productCategory) {
+        List<ProductDTO> list = new ArrayList<>();
+        List<ProductModel> productList = productCategory.getProductModelSet();
+
+        for (ProductModel b : productList) {
+            list.add(new ProductDTO()
+                    .setDtoProductID(b.getId())
+                    .setDtoProductName(b.getProductName())
+                    .setDtoProductVendorCode(b.getVendorCode())
+                    .setDtoProductDescription(b.getDescription())
+                    .setDtoProductImageFilePath(b.getProductImageFilePath())
+                    .setDtoProductPrice(b.getPrice()));
+        }
+        return list;
     }
 
     public List<ProductModel> findProductsByType(ProductType productType) {
@@ -50,7 +94,7 @@ public class ProductService {
         if (price != null)
             productModel.setPrice(price);
 
-        if (description !=null)
+        if (description != null)
             productModel.setDescription(description);
 
         new ProductDao().changeProductData(productModel);

@@ -21,11 +21,10 @@ import java.util.List;
  * Created by David on 5/9/2018.
  */
 
-@Controller
-@RequestMapping("/")
+
 public class MainController {
 
-    @Autowired
+    /*@Autowired
     private ProductService productService;
 
     @Autowired
@@ -40,7 +39,7 @@ public class MainController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/")
+
     public ModelAndView main() {
         ModelAndView modelAndView = new ModelAndView("redirect:/index");
         return modelAndView;
@@ -80,5 +79,5 @@ public class MainController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView logout(String logout) {
         return new ModelAndView("redirect:/index");
-    }
+    }*/
 }

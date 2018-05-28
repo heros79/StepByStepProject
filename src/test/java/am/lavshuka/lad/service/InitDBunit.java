@@ -1,9 +1,9 @@
 package am.lavshuka.lad.service;
 
-import org.dbunit.DBTestCase;
+/*import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;*/
 
 import java.io.FileInputStream;
 import java.util.ResourceBundle;
@@ -11,9 +11,9 @@ import java.util.ResourceBundle;
 /**
  * Created by David on 5/9/2018.
  */
-public class InitDBunit extends DBTestCase {
+public class InitDBunit /*extends DBTestCase*/ {
 
-    public InitDBunit(String name) {
+/*    public InitDBunit(String name) {
         super(name);
         ResourceBundle rb = ResourceBundle.getBundle("db");
         String driver = rb.getString("driver");
@@ -32,5 +32,5 @@ public class InitDBunit extends DBTestCase {
     @Override
     protected IDataSet getDataSet() throws Exception {
         return new FlatXmlDataSetBuilder().build(new FileInputStream("src/test/resources/testdata.xml"));
-    }
+    }*/
 }

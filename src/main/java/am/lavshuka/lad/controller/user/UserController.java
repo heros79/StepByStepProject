@@ -14,10 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by David on 5/18/2018.
  */
 
-@Controller
+
 public class UserController {
 
-    @Autowired
+   /* @Autowired
     private UserService userService;
 
     @Autowired
@@ -108,5 +108,5 @@ public class UserController {
     @RequestMapping(value = "changeaccount", method = RequestMethod.POST)
     public ModelAndView getChangePage() {
         return new ModelAndView("changeUserData");
-    }
+    }*/
 }

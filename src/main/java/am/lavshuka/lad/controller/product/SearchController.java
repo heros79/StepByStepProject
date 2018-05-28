@@ -21,10 +21,10 @@ import java.util.List;
  * Created by David on 5/17/2018.
  */
 
-@Controller
+
 public class SearchController {
 
-    @Autowired
+    /*@Autowired
     private ProductService productService;
 
     @Autowired
@@ -103,6 +103,6 @@ public class SearchController {
         modelAndView.addObject("brandList", brandList);
         modelAndView.addObject("products", productsList);
 
-        return modelAndView;
-    }
+        return modelAndView;*/
+    //}
 }

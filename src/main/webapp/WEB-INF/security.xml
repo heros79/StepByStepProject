@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http auto-config="true">
+<!--    <http auto-config="true">
 
         <intercept-url pattern="/" access="permitAll"/>
         <intercept-url pattern="/index" access="permitAll"/>
@@ -28,6 +28,6 @@
 
     <beans:bean id="userDetailsServiceImpl"
                 class="am.lavshuka.lad.service.user.UserDetailServiceImpl"></beans:bean>
-    <beans:bean id ="passwordEncoder" class = "org.springframework.security.crypto.password.NoOpPasswordEncoder" factory-method = "getInstance" />
+    <beans:bean id ="passwordEncoder" class = "org.springframework.security.crypto.password.NoOpPasswordEncoder" factory-method = "getInstance" />-->
 
 </beans:beans>

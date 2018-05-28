@@ -12,7 +12,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by @Author David Karchikyan on 4/19/2018.
+ * Created by @Author David Karchikyan
+ * this class present Product object model and entity,
+ * use lombok API to create fields getters, setters and constructor.
  */
 
 @Getter

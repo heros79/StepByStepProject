@@ -1,10 +1,12 @@
 package am.lavshuka.lad.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Proxy;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -20,6 +22,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "prodbrand")
+@JsonIgnoreProperties(ignoreUnknown = false)
+@Proxy(lazy = false)
 @Component
 public class ProductBrand implements Serializable {
 

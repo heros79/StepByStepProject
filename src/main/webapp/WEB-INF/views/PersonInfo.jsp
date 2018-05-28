@@ -1,11 +1,12 @@
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+&lt;%&ndash;
   Created by IntelliJ IDEA.
   User: David
   Date: 5/18/2018
   Time: 1:59 AM
   To change this template use File | Settings | File Templates.
---%>
+&ndash;%&gt;
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -27,3 +28,4 @@ E-mail     ${email};
 
 </body>
 </html>
+--%>

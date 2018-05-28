@@ -6,10 +6,10 @@ import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.product.ProductsByCount;
 import am.lavshuka.lad.model.user.UserModel;
 import am.lavshuka.lad.service.product.ProductByCountService;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+/*import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;*/
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+/*import org.springframework.transaction.annotation.Transactional;*/
 
 import java.util.Date;
 
@@ -134,7 +134,7 @@ public class UserService {
         return rs;
     }
 
-    @Transactional(readOnly = true)
+/*    @Transactional(readOnly = true)
     public String getAuthenticatedUserData() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String principalName = null;
@@ -144,5 +144,5 @@ public class UserService {
             principalName = principal.toString();
         }
         return principalName;
-    }
+    }*/
 }

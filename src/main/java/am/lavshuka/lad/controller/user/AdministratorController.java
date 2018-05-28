@@ -23,10 +23,10 @@ import java.util.List;
  * Created by David on 5/18/2018.
  */
 
-@Controller
+
 public class AdministratorController {
 
-    @Autowired
+    /*@Autowired
     private UserService userService;
 
     @Autowired
@@ -94,5 +94,5 @@ public class AdministratorController {
         }
 
         return modelAndView;
-    }
+    }*/
 }

@@ -6,7 +6,7 @@ import am.lavshuka.lad.model.product.ProductModel;
 import am.lavshuka.lad.model.user.UserModel;
 import am.lavshuka.lad.service.InitDBunit;
 import am.lavshuka.lad.service.user.UserService;
-import org.dbunit.operation.DatabaseOperation;
+/*import org.dbunit.operation.DatabaseOperation;*/
 import org.junit.Test;
 
 import java.util.Date;
@@ -18,9 +18,9 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by David on 5/8/2018.
  */
-public class UserServiceTest extends InitDBunit {
+public class UserServiceTest {
 
-    public UserServiceTest(String name) {
+    /*public UserServiceTest(String name) {
         super(name);
     }
 
@@ -154,5 +154,5 @@ public class UserServiceTest extends InitDBunit {
     private void unregisterUser() {
         UserModel userModel = new UserDao().findByLogin("TestUser");
         new UserService().unRegisterUser(userModel);
-    }
+    }*/
 }

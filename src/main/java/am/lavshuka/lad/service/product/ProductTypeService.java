@@ -1,10 +1,12 @@
 package am.lavshuka.lad.service.product;
 
 import am.lavshuka.lad.dao.product.ProductTypeDao;
+import am.lavshuka.lad.dto.ProductTypeDTO;
 import am.lavshuka.lad.model.product.ProductCategory;
 import am.lavshuka.lad.model.product.ProductType;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,8 +24,17 @@ public class ProductTypeService {
         return new ProductTypeDao().findByTypeName(typeName);
     }
 
-    public List<ProductType> findAllProductType() {
-        return new ProductTypeDao().findAll(ProductType.class);
+    public List<ProductTypeDTO> findAllProductType() {
+        List<ProductTypeDTO> list = new ArrayList<>();
+        List<ProductType> typeList = new ProductTypeDao().findAll(ProductType.class);
+
+        for (ProductType b : typeList) {
+            list.add(new ProductTypeDTO()
+                    .setID(b.getId())
+                    .setName(b.getProductTypeName()));
+        }
+
+        return list;
     }
 
     public List<ProductType> findProductTypeByCategory(ProductCategory productCategory) {

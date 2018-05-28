@@ -18,10 +18,10 @@ import java.util.Date;
  * Created by David on 5/18/2018.
  */
 
-@Controller
+
 public class AddProductController {
 
-    @Autowired
+    /*@Autowired
     private ProductCategoryService productCategoryService;
 
     @Autowired
@@ -185,5 +185,5 @@ public class AddProductController {
         productAction.buyProduct(productModel, count, new Date());
 
         return modelAndView;
-    }
+    }*/
 }

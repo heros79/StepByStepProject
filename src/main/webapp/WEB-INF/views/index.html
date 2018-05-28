@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+       var data;
+        function getList() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    data = JSON.parse(this.responseText);
+                    var category = document.getElementById('searchByCategory');
+                    var type = document.getElementById('searchByType');
+                    var brand = document.getElementById('searchByBrand');
+                    var product = document.getElementById('catalog');
+                    for (var i = 0; i < data.categoryList.length; i++) {
+                        var opt = document.createElement("option");
+                        opt.text = data.categoryList[i].categoryName;
+                        category.options.add(opt, i + 1);
+                    }
+                    for (var i = 0; i < data.typeList.length; i++) {
+                        var opt = document.createElement("option");
+                        opt.text = data.typeList[i].productTypeName;
+                        type.options.add(opt, i + 1);
+                    }
+                    for (var i = 0; i < data.brandList.length; i++) {
+                        var opt = document.createElement("option");
+                        opt.text = data.brandList[i].productBrandName;
+                        brand.options.add(opt, i + 1);
+                    }
+
+                    for (var i = 0; i < data.productList.length; i++) {
+                        var item_div = document.createElement("div");
+                        item_div.className = "item";
+                        var item_div_productName = document.createElement("div");
+                        var item_div_productImage = document.createElement("div");
+                        var item_div_productPrice = document.createElement("div");
+                        var image_url = data.productList[i].productImageFilePath;
+                        item_div_productImage.style.background = 'url(' + image_url +')';
+                        item_div_productImage.style.visibility = "visible";
+                        item_div_productName.innerHTML = data.productList[i].productName;
+                        item_div_productName.style.visibility = "visible";
+                        item_div_productPrice.innerHTML = data.productList[i].productPrice;
+                        item_div_productPrice.style.visibility = "visible";
+                        item_div.appendChild(item_div_productImage);
+                        item_div.appendChild(item_div_productName);
+                        item_div.appendChild(item_div_productPrice);
+                        product.appendChild(item_div);
+                    }
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080//test", true);
+            xhttp.send();
+        }
+
+    </script>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/index.css">
+</head>
+<body onload="getList()">
+
+<div class="searchBlock">
+
+    <div>
+        <select id="searchByCategory">
+            <option value="default">--||--</option>
+        </select>
+    </div>
+
+    <div>
+        <select id="searchByType">
+            <option value="default">--||--</option>
+        </select>
+    </div>
+
+    <div>
+        <select id="searchByBrand">
+            <option value="default">--||--</option>
+        </select>
+    </div>
+
+</div>
+
+<div class="container">
+    <div class="catalogs" id="catalog" style="visibility: hidden">
+
+
+    </div>
+</div>
+
+
+</body>
+</html>
