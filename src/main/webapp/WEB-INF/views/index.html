@@ -5,7 +5,7 @@
     <title>Title</title>
 
     <script>
-       var data;
+       var image_url;
         function getList() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -34,19 +34,53 @@
                     for (var i = 0; i < data.productList.length; i++) {
                         var item_div = document.createElement("div");
                         item_div.className = "item";
-                        var item_div_productName = document.createElement("div");
+                        image_url = data.productList[i].productImageFilePath;
+
                         var item_div_productImage = document.createElement("div");
-                        var item_div_productPrice = document.createElement("div");
-                        var image_url = data.productList[i].productImageFilePath;
-                        item_div_productImage.style.background = 'url(' + image_url +')';
-                        item_div_productImage.style.visibility = "visible";
+                        item_div_productImage.className = "f_product";
+                        item_div_productImage.style.backgroundImage = 'url("' + image_url +'")';
+                        item_div_productImage.setAttribute("onclick", 'openImageWindow("' + image_url + '")');
+
+                        var item_div_productName = document.createElement("div");
+                        item_div_productName.className = "n_product";
                         item_div_productName.innerHTML = data.productList[i].productName;
-                        item_div_productName.style.visibility = "visible";
-                        item_div_productPrice.innerHTML = data.productList[i].productPrice;
-                        item_div_productPrice.style.visibility = "visible";
+
+                        var item_div_productPrice = document.createElement("div");
+                        item_div_productPrice.className = "p_product";
+                        item_div_productPrice.innerHTML = data.productList[i].productPrice + " AMD";
+
+                        var item_div_count = document.createElement("div");
+                        item_div_count.className = "number";
+
+                        var span_minus = document.createElement("span");
+                        span_minus.className = "minus";
+                        span_minus.innerHTML = "-";
+
+                        var span_plus = document.createElement("span");
+                        span_plus.className = "plus";
+                        span_plus.innerHTML = "+";
+
+                        var count_input = document.createElement("input");
+                        count_input.className = "count";
+                        count_input.id = data.productList[i].productID;
+                        count_input.setAttribute("type", "text");
+                        count_input.setAttribute("value", "1");
+                        count_input.setAttribute("min", "1");
+                        count_input.setAttribute("size", "5");
+
+                        var buy_button = document.createElement("button");
+                        buy_button.id = "selectCount";
+                        buy_button.setAttribute("type", "button");
+                        buy_button.innerHTML = "Choice";
+
                         item_div.appendChild(item_div_productImage);
                         item_div.appendChild(item_div_productName);
                         item_div.appendChild(item_div_productPrice);
+                        item_div.appendChild(item_div_count);
+                        item_div_count.appendChild(span_minus);
+                        item_div_count.appendChild(count_input);
+                        item_div_count.appendChild(span_plus);
+                        item_div.appendChild(buy_button);
                         product.appendChild(item_div);
                     }
                 }
@@ -55,7 +89,16 @@
             xhttp.send();
         }
 
+       function openImageWindow(src) {
+           var image = new Image();
+           image.src = src;
+           var width = image.width;
+           var height = image.height;
+           window.open(src, "Image", "width=" + width + ",height=" + height);
+       }
+
     </script>
+
     <link rel="stylesheet" type="text/css" href="../../resources/css/index.css">
 </head>
 <body onload="getList()">
@@ -82,7 +125,7 @@
 
 </div>
 
-<div class="container">
+<div class="container" style="visibility: hidden">
     <div class="catalogs" id="catalog" style="visibility: hidden">
 
 

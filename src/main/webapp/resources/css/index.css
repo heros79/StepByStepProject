@@ -20,7 +20,7 @@
     display: inline-block;
 }
 
-.catalog {
+.catalogs {
     width: 500px;
 }
 
@@ -35,18 +35,33 @@
     border: 2px solid #2c3e50;
 }
 
-#f_product{
+.f_product{
     vertical-align: top;
     width: 120px;
     height: 120px;
     horiz-align: center;
     margin: auto;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    visibility: visible;
+}
+
+.n_product{
+    visibility: visible;
+}
+
+.p_product{
+    visibility: visible;
 }
 
 .number{
     display: inline-flex;
     width: 28px;
     margin: 8px;
+    position: inherit;
+    vertical-align: top;
+    text-align: center;
+    visibility: visible
 }
 
 .minus, .plus {
@@ -76,7 +91,7 @@
     cursor: pointer;
 }
 
-#n_product, #p_product {
+.n_product, .p_product {
     width: 120px;
     height: 15px;
     font-size: 14px;
@@ -85,6 +100,10 @@
     margin-top: auto;
 }
 
-#choice{
-    vertical-align: top;
+#selectCount{
+    visibility: visible;
+    margin: 28px;
+    margin-top: auto;
+    width: 66px;
+    height: 22px;
 }
