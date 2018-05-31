@@ -2,100 +2,143 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="../../resources/js/jquery-3.3.1.min.js"></script>
     <title>Title</title>
 
-    <script>
-       var image_url;
-        function getList() {
+    <script type="text/javascript">
+
+
+        var data;
+        function j_son() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     data = JSON.parse(this.responseText);
-                    var category = document.getElementById('searchByCategory');
-                    var type = document.getElementById('searchByType');
-                    var brand = document.getElementById('searchByBrand');
-                    var product = document.getElementById('catalog');
-                    for (var i = 0; i < data.categoryList.length; i++) {
-                        var opt = document.createElement("option");
-                        opt.text = data.categoryList[i].categoryName;
-                        category.options.add(opt, i + 1);
-                    }
-                    for (var i = 0; i < data.typeList.length; i++) {
-                        var opt = document.createElement("option");
-                        opt.text = data.typeList[i].productTypeName;
-                        type.options.add(opt, i + 1);
-                    }
-                    for (var i = 0; i < data.brandList.length; i++) {
-                        var opt = document.createElement("option");
-                        opt.text = data.brandList[i].productBrandName;
-                        brand.options.add(opt, i + 1);
-                    }
-
-                    for (var i = 0; i < data.productList.length; i++) {
-                        var item_div = document.createElement("div");
-                        item_div.className = "item";
-                        image_url = data.productList[i].productImageFilePath;
-
-                        var item_div_productImage = document.createElement("div");
-                        item_div_productImage.className = "f_product";
-                        item_div_productImage.style.backgroundImage = 'url("' + image_url +'")';
-                        item_div_productImage.setAttribute("onclick", 'openImageWindow("' + image_url + '")');
-
-                        var item_div_productName = document.createElement("div");
-                        item_div_productName.className = "n_product";
-                        item_div_productName.innerHTML = data.productList[i].productName;
-
-                        var item_div_productPrice = document.createElement("div");
-                        item_div_productPrice.className = "p_product";
-                        item_div_productPrice.innerHTML = data.productList[i].productPrice + " AMD";
-
-                        var item_div_count = document.createElement("div");
-                        item_div_count.className = "number";
-
-                        var span_minus = document.createElement("span");
-                        span_minus.className = "minus";
-                        span_minus.innerHTML = "-";
-
-                        var span_plus = document.createElement("span");
-                        span_plus.className = "plus";
-                        span_plus.innerHTML = "+";
-
-                        var count_input = document.createElement("input");
-                        count_input.className = "count";
-                        count_input.id = data.productList[i].productID;
-                        count_input.setAttribute("type", "text");
-                        count_input.setAttribute("value", "1");
-                        count_input.setAttribute("min", "1");
-                        count_input.setAttribute("size", "5");
-
-                        var buy_button = document.createElement("button");
-                        buy_button.id = "selectCount";
-                        buy_button.setAttribute("type", "button");
-                        buy_button.innerHTML = "Choice";
-
-                        item_div.appendChild(item_div_productImage);
-                        item_div.appendChild(item_div_productName);
-                        item_div.appendChild(item_div_productPrice);
-                        item_div.appendChild(item_div_count);
-                        item_div_count.appendChild(span_minus);
-                        item_div_count.appendChild(count_input);
-                        item_div_count.appendChild(span_plus);
-                        item_div.appendChild(buy_button);
-                        product.appendChild(item_div);
-                    }
                 }
             };
-            xhttp.open("GET", "http://localhost:8080//test", true);
+            xhttp.open("GET", "http://localhost:8080//index", true);
             xhttp.send();
+            return(data);
         }
 
-       function openImageWindow(src) {
-           var image = new Image();
-           image.src = src;
-           var width = image.width;
-           var height = image.height;
-           window.open(src, "Image", "width=" + width + ",height=" + height);
-       }
+        function getList() {
+            alert(j_son());
+            var data = j_son();
+
+            alert(data);
+            var category = document.getElementById('searchByCategory');
+            var type = document.getElementById('searchByType');
+            var brand = document.getElementById('searchByBrand');
+            var product = document.getElementById('catalog');
+
+            for (var i = 0; i < data.categoryList.length; i++) {
+                var opt = document.createElement("option");
+                opt.setAttribute("value", data.categoryList[i].categoryName);
+                opt.text = data.categoryList[i].categoryName;
+                category.options.add(opt, i + 1);
+            }
+            for (var i = 0; i < data.typeList.length; i++) {
+                var opt = document.createElement("option");
+                opt.text = data.typeList[i].productTypeName;
+                type.options.add(opt, i + 1);
+            }
+            for (var i = 0; i < data.brandList.length; i++) {
+                var opt = document.createElement("option");
+                opt.text = data.brandList[i].productBrandName;
+                brand.options.add(opt, i + 1);
+            }
+
+            for (var i = 0; i < data.productList.length; i++) {
+                var item_div = document.createElement("div");
+                item_div.className = "item";
+                var image_url = data.productList[i].productImageFilePath;
+
+                var item_div_productImage = document.createElement("div");
+                item_div_productImage.className = "f_product";
+                item_div_productImage.style.backgroundImage = 'url("' + image_url + '")';
+                item_div_productImage.setAttribute("onclick", 'openImageWindow("' + image_url + '")');
+
+                var item_div_productName = document.createElement("div");
+                item_div_productName.className = "n_product";
+                item_div_productName.innerHTML = data.productList[i].productName;
+
+                var item_div_productPrice = document.createElement("div");
+                item_div_productPrice.className = "p_product";
+                item_div_productPrice.innerHTML = data.productList[i].productPrice + " AMD";
+
+                var count_input = document.createElement("input");
+                count_input.className = "count";
+                count_input.id = $data.productList[i].productID;
+                count_input.setAttribute("type", "number");
+                count_input.setAttribute("value", "1");
+                count_input.setAttribute("min", "1");
+                count_input.setAttribute("size", "5");
+
+                var buy_button = document.createElement("button");
+                buy_button.id = "selectCount";
+                buy_button.setAttribute("type", "button");
+                buy_button.innerHTML = "Choice";
+
+                item_div.appendChild(item_div_productImage);
+                item_div.appendChild(item_div_productName);
+                item_div.appendChild(item_div_productPrice);
+                item_div.appendChild(count_input);
+                item_div.appendChild(buy_button);
+                product.appendChild(item_div);
+            }
+
+        }
+
+        function openImageWindow(src) {
+            var image = new Image();
+            image.src = src;
+            var width = image.width;
+            var height = image.height;
+            window.open(src, "Image", "width=" + width + ",height=" + height);
+        }
+
+
+        function searchByCategory() {
+            /*                        alert("asas")
+             var category = document.getElementsByName("categoryChoice");
+             var xhttp = new XMLHttpRequest();
+             xhttp.onreadystatechange = function () {
+             if (this.readyState == 4 && this.status == 200){
+             alert("sssss");
+             getList();
+             }
+             }
+             xhttp.open("GET", "http://localhost:8080/index", true);
+             xhttp.send();*/
+
+            /*            $(document).ready(function () {
+             var $category = document.getElementById("searchByCategory").value;
+             alert($category);
+             $.ajax({
+             url: 'http://localhost:8080/index',
+             method: 'get',
+             data: $category,
+             error: function (message) {
+             console.log(message);
+             },
+             success: function (data) {
+             console.log(data);
+             }
+             });
+             getList();
+             });*/
+
+        }
+        $(document).ready(function () {
+            $("#searchByCategory").on('change', function () {
+
+                var category = $("#searchByCategory").val();
+                alert(category);
+                $.get('http://localhost:8080/index', {category: category}, function (result) {
+                    console.log(data);
+                });
+            });
+        });
 
     </script>
 
@@ -103,11 +146,21 @@
 </head>
 <body onload="getList()">
 
-<div class="searchBlock">
+<div class="header">
+    <div id="login-form">
+        Login &nbsp &nbsp &nbsp <input type="text"><br>
+        Password <input type="password"><br>
+        <button type="button"> Sign In</button>
+        &nbsp &nbsp &nbsp &nbsp &nbsp
+        <a href="registration.html">Register new account</a><br>
+    </div>
+</div>
+
+<div class="container" id="searchBlock">
 
     <div>
-        <select id="searchByCategory">
-            <option value="default">--||--</option>
+        <select id="searchByCategory" name="categoryChoice">
+            <option value="--||--">--||--</option>
         </select>
     </div>
 

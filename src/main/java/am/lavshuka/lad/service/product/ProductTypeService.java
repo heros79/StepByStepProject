@@ -37,7 +37,16 @@ public class ProductTypeService {
         return list;
     }
 
-    public List<ProductType> findProductTypeByCategory(ProductCategory productCategory) {
-        return productCategory.getProductTypeSet();
+    public List<ProductTypeDTO> findProductTypeByCategory(ProductCategory productCategory) {
+        List<ProductTypeDTO> list = new ArrayList<>();
+        List<ProductType> typeList = productCategory.getProductTypeSet();
+
+        for (ProductType b : typeList) {
+            list.add(new ProductTypeDTO()
+                    .setID(b.getId())
+                    .setName(b.getProductTypeName()));
+        }
+
+        return list;
     }
 }

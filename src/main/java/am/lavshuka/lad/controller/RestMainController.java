@@ -4,19 +4,13 @@ import am.lavshuka.lad.dto.ProductBrandDTO;
 import am.lavshuka.lad.dto.ProductCategoryDTO;
 import am.lavshuka.lad.dto.ProductDTO;
 import am.lavshuka.lad.dto.ProductTypeDTO;
-import am.lavshuka.lad.model.product.ProductBrand;
 import am.lavshuka.lad.model.product.ProductCategory;
-import am.lavshuka.lad.model.product.ProductModel;
-import am.lavshuka.lad.model.product.ProductType;
 import am.lavshuka.lad.service.product.ProductBrandService;
 import am.lavshuka.lad.service.product.ProductCategoryService;
 import am.lavshuka.lad.service.product.ProductService;
 import am.lavshuka.lad.service.product.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Hashtable;
 import java.util.List;
@@ -42,14 +36,23 @@ public class RestMainController {
     private ProductBrandService productBrandService;
 
     @CrossOrigin
-    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json")
-    public Map<String, Object> index() {
+    @RequestMapping(value = "/index", method = RequestMethod.GET, produces = "application/json")
+    public Map<String, Object> index(@RequestParam(value = "category", required = false) String category) {
         Map<String, Object> map = new Hashtable<>();
 
-        List<ProductDTO> productList = productService.findAllProducts();
         List<ProductCategoryDTO> categoryList = productCategoryService.findAllProductCategory();
-        List<ProductTypeDTO> typeList = productTypeService.findAllProductType();
         List<ProductBrandDTO> brandList = productBrandService.findAllProductBrand();
+        List<ProductTypeDTO> typeList;
+        List<ProductDTO> productList;
+        System.out.println("test " + category);
+        if (null == category || (category.equals("--||--") && category.equals(""))) {
+            typeList = productTypeService.findAllProductType();
+            productList = productService.findAllProducts();
+        } else {
+            ProductCategory productCategory = productCategoryService.findProductCategoryByName(category);
+            typeList = productTypeService.findProductTypeByCategory(productCategory);
+            productList = productService.findProductsByCategory(productCategory);
+        }
 
         map.put("productList", productList);
         map.put("categoryList", categoryList);

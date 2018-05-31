@@ -1,17 +1,14 @@
-#header{
+.header{
     background: lightsalmon;
     width: auto;
     height: 130px;
 }
-#login{
-    background:lightsalmon;
-    height: 50px;
-}
+
 #login-form{
     display: inline-block;
     width: auto;
-    margin-left: 860px;
-    margin-top: 12px;
+    margin-left: 1004px;
+    margin-top: 15px;
 }
 
 .container {
@@ -29,7 +26,7 @@
     vertical-align: top;
     width: 100px;
     min-height: 120px;
-    max-height: 190px;
+    max-height: 210px;
     margin-right: 25px;
     margin-bottom: 25px;
     border: 2px solid #2c3e50;
@@ -54,41 +51,13 @@
     visibility: visible;
 }
 
-.number{
-    display: inline-flex;
-    width: 28px;
-    margin: 8px;
-    position: inherit;
-    vertical-align: top;
-    text-align: center;
-    visibility: visible
-}
-
-.minus, .plus {
-    width: 17px;
-    height: 17px;
-    background: #f2f2f2;
-    border-radius: 4px;
+.count {
+    height: 20px;
+    width: 64px;
     border: 1px solid #ddd;
-}
-
-.minus{
-    padding: 0px 5px 0px 5px;
-}
-.plus{
-    padding: 0px 5px 0px 4px;
-}
-
-
-.number input {
-    height: 18px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 0 2px;
-}
-
-.number span {
-    cursor: pointer;
+    margin-left: 28px;
+    visibility: visible;
+    margin-top: auto;
 }
 
 .n_product, .p_product {
