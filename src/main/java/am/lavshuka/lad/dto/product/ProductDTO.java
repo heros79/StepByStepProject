@@ -1,4 +1,4 @@
-package am.lavshuka.lad.dto;
+package am.lavshuka.lad.dto.product;
 
 import am.lavshuka.lad.model.product.BuySellActionProduct;
 import am.lavshuka.lad.model.product.ProductBrand;

@@ -1,10 +1,12 @@
 package am.lavshuka.lad.controller;
 
-import am.lavshuka.lad.dto.ProductBrandDTO;
-import am.lavshuka.lad.dto.ProductCategoryDTO;
-import am.lavshuka.lad.dto.ProductDTO;
-import am.lavshuka.lad.dto.ProductTypeDTO;
+import am.lavshuka.lad.dto.product.ProductBrandDTO;
+import am.lavshuka.lad.dto.product.ProductCategoryDTO;
+import am.lavshuka.lad.dto.product.ProductDTO;
+import am.lavshuka.lad.dto.product.ProductTypeDTO;
+import am.lavshuka.lad.model.product.ProductBrand;
 import am.lavshuka.lad.model.product.ProductCategory;
+import am.lavshuka.lad.model.product.ProductType;
 import am.lavshuka.lad.service.product.ProductBrandService;
 import am.lavshuka.lad.service.product.ProductCategoryService;
 import am.lavshuka.lad.service.product.ProductService;
@@ -37,22 +39,37 @@ public class RestMainController {
 
     @CrossOrigin
     @RequestMapping(value = "/index", method = RequestMethod.GET, produces = "application/json")
-    public Map<String, Object> index(@RequestParam(value = "category", required = false) String category) {
+    public Map<String, Object> index(@RequestParam(value = "category", required = false) String category,
+                                     @RequestParam(value = "type", required = false) String type,
+                                     @RequestParam(value = "brand", required = false) String brand) {
         Map<String, Object> map = new Hashtable<>();
 
         List<ProductCategoryDTO> categoryList = productCategoryService.findAllProductCategory();
         List<ProductBrandDTO> brandList = productBrandService.findAllProductBrand();
-        List<ProductTypeDTO> typeList;
-        List<ProductDTO> productList;
-        System.out.println("test " + category);
-        if (null == category || (category.equals("--||--") && category.equals(""))) {
+        List<ProductTypeDTO> typeList = null;
+        List<ProductDTO> productList = null;
+
+        if (null != category && !category.equals("--||--")) {
+            if (null == type && null == brand) {
+                ProductCategory productCategory = productCategoryService.findProductCategoryByName(category);
+                typeList = productTypeService.findProductTypeByCategory(productCategory);
+                productList = productService.findProductsByCategory(productCategory);
+            }
+        }
+
+        if (null != type && !type.equals("--||--")){
+            if (null == brand) {
+                ProductType productType = productTypeService.findProductTypeByName(type);
+                productList = productService.findProductsByType(productType);
+            }
+        } else if (null != brand && !brand.equals("--||--")) {
+            ProductBrand productBrand = productBrandService.findProductBrandByName(brand);
+            productList = productService.findProductsByBrand(productBrand);
+        } else {
             typeList = productTypeService.findAllProductType();
             productList = productService.findAllProducts();
-        } else {
-            ProductCategory productCategory = productCategoryService.findProductCategoryByName(category);
-            typeList = productTypeService.findProductTypeByCategory(productCategory);
-            productList = productService.findProductsByCategory(productCategory);
         }
+
 
         map.put("productList", productList);
         map.put("categoryList", categoryList);

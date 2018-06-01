@@ -1,7 +1,7 @@
 package am.lavshuka.lad.service.product;
 
 import am.lavshuka.lad.dao.product.ProductBrandDao;
-import am.lavshuka.lad.dto.ProductBrandDTO;
+import am.lavshuka.lad.dto.product.ProductBrandDTO;
 import am.lavshuka.lad.model.product.ProductBrand;
 import org.springframework.stereotype.Service;
 

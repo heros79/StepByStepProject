@@ -1,4 +1,4 @@
-package am.lavshuka.lad.dto;
+package am.lavshuka.lad.dto.product;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,19 +11,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProductCategoryDTO {
+public class ProductTypeDTO {
 
     private Long id;
 
-    private String categoryName;
+    private String productTypeName;
 
-    public ProductCategoryDTO setID(Long id) {
+    public ProductTypeDTO setID(Long id) {
         this.id = id;
         return this;
     }
 
-    public ProductCategoryDTO setName(String name) {
-        this.categoryName = name;
+    public ProductTypeDTO setName(String name) {
+        this.productTypeName = name;
         return this;
     }
 }

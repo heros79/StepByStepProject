@@ -7,29 +7,9 @@
 
     <script type="text/javascript">
 
-
-        var data;
-        function j_son() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    data = JSON.parse(this.responseText);
-                }
-            };
-            xhttp.open("GET", "http://localhost:8080//index", true);
-            xhttp.send();
-            return(data);
-        }
-
-        function getList() {
-            alert(j_son());
-            var data = j_son();
-
-            alert(data);
+        function getCategoryAndBrand(data) {
             var category = document.getElementById('searchByCategory');
-            var type = document.getElementById('searchByType');
             var brand = document.getElementById('searchByBrand');
-            var product = document.getElementById('catalog');
 
             for (var i = 0; i < data.categoryList.length; i++) {
                 var opt = document.createElement("option");
@@ -37,15 +17,30 @@
                 opt.text = data.categoryList[i].categoryName;
                 category.options.add(opt, i + 1);
             }
-            for (var i = 0; i < data.typeList.length; i++) {
-                var opt = document.createElement("option");
-                opt.text = data.typeList[i].productTypeName;
-                type.options.add(opt, i + 1);
-            }
+
             for (var i = 0; i < data.brandList.length; i++) {
                 var opt = document.createElement("option");
                 opt.text = data.brandList[i].productBrandName;
                 brand.options.add(opt, i + 1);
+            }
+        }
+
+        function getTypeAndProduct(data) {
+
+            var type = document.getElementById('searchByType');
+
+            var product = document.getElementById('catalog');
+
+            while(product.firstChild){
+                product.removeChild(product.firstChild);
+            }
+
+            $('#searchByType').find("option:gt(0)").remove();
+
+            for (var i = 0; i < data.typeList.length; i++) {
+                var opt = document.createElement("option");
+                opt.text = data.typeList[i].productTypeName;
+                type.options.add(opt, i + 1);
             }
 
             for (var i = 0; i < data.productList.length; i++) {
@@ -68,7 +63,7 @@
 
                 var count_input = document.createElement("input");
                 count_input.className = "count";
-                count_input.id = $data.productList[i].productID;
+                count_input.id = data.productList[i].productID;
                 count_input.setAttribute("type", "number");
                 count_input.setAttribute("value", "1");
                 count_input.setAttribute("min", "1");
@@ -86,6 +81,18 @@
                 item_div.appendChild(buy_button);
                 product.appendChild(item_div);
             }
+        }
+        function getList() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    data = JSON.parse(this.responseText);
+                    getCategoryAndBrand(data);
+                    getTypeAndProduct(data);
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080//index", true);
+            xhttp.send();
 
         }
 
@@ -98,44 +105,30 @@
         }
 
 
-        function searchByCategory() {
-            /*                        alert("asas")
-             var category = document.getElementsByName("categoryChoice");
-             var xhttp = new XMLHttpRequest();
-             xhttp.onreadystatechange = function () {
-             if (this.readyState == 4 && this.status == 200){
-             alert("sssss");
-             getList();
-             }
-             }
-             xhttp.open("GET", "http://localhost:8080/index", true);
-             xhttp.send();*/
-
-            /*            $(document).ready(function () {
-             var $category = document.getElementById("searchByCategory").value;
-             alert($category);
-             $.ajax({
-             url: 'http://localhost:8080/index',
-             method: 'get',
-             data: $category,
-             error: function (message) {
-             console.log(message);
-             },
-             success: function (data) {
-             console.log(data);
-             }
-             });
-             getList();
-             });*/
-
-        }
         $(document).ready(function () {
             $("#searchByCategory").on('change', function () {
-
                 var category = $("#searchByCategory").val();
-                alert(category);
                 $.get('http://localhost:8080/index', {category: category}, function (result) {
-                    console.log(data);
+                    getTypeAndProduct(result);
+                });
+            });
+        });
+
+        $(document).ready(function () {
+           $('#searchByType').on('change', function () {
+                var type = $('#searchByType').val();
+                var category = $('#searchByCategory').val();
+                $.get('http://localhost:8080/index', {type: type, category: category}, function (result) {
+                    getTypeAndProduct(result);
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $('#searchByBrand').on('change', function () {
+                var brand = $('#searchByBrand').val();
+                $.get('http://localhost:8080/index', {brand: brand}, function (result) {
+                    getTypeAndProduct(result);
                 });
             });
         });

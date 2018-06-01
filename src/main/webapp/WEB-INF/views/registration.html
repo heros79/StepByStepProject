@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../resources/js/jquery-3.3.1.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#button").on('click', function () {
+                var firstName = $("#firstName").val();
+                var lastName = $("#lastName").val();
+                var login = $("#login").val();
+                var email = $("#email").val();
+                var pass = $("#password").val();
+                var confirmPass = $("#confirmPassword").val();
+                $.ajax({
+                    url: 'http://localhost:8080/register',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {firstName: firstName, lastName: lastName, login: login, email: email,
+                        pass: pass, confirmPass: confirmPass},
+                    success: function (result) {
+                    },
+                    error: function (result) {
+
+                    }
+                });
+            });
+        });
+
+    </script>
+</head>
+<body>
+
+<div style="display: inline-block; text-align: center">
+    Input Your First Name<br>
+    <input type="text" id="firstName">
+</div>
+
+<div style="display:inline-block; text-align: center">
+    Input Your Last Name<br>
+    <input type="text" id="lastName">
+</div>
+<br>
+<br>
+
+<div style="display: inline-block; text-align: center">
+    Input Your Login<br>
+    <input type="text" id="login">
+</div>
+
+<div style="display:inline-block; text-align: center">
+    Input Your E-mail<br>
+    <input type="text" id="email">
+</div>
+<br>
+<br>
+
+<div style="display: inline-block; text-align: center">
+    Input Your Password<br>
+    <input type="password" id="password">
+</div>
+
+<div style="display:inline-block; text-align: center">
+    Confirm Your Password<br>
+    <input type="password" id="confirmPassword">
+</div>
+<br>
+<br>
+
+<button type="submit" id="button">REGISTRATION</button>
+
+
+</body>
+</html>
